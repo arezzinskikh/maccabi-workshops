@@ -5,8 +5,8 @@ export default function Footer() {
   return (
     <footer className={styles.footer}>
       <div className={styles.links}>
-        <Link href="/accessibility" className={styles.link}>הצהרת נגישות</Link>
-        <Link href="/privacy" className={styles.link}>מדיניות פרטיות</Link>
+        <a href="https://www.maccabi4u.co.il/new/31276/23554/accessibility/access_services/" className={styles.link} target="_blank" rel="noopener noreferrer">הצהרת נגישות</a>
+        <a href="https://www.maccabi4u.co.il/new/23085/policies_and_procedures/privacy_protection/" className={styles.link} target="_blank" rel="noopener noreferrer">מדיניות פרטיות</a>
       </div>
     </footer>
   );

@@ -36,7 +36,7 @@ export default async function HomePage() {
             <div className={`${styles.heroImage} absolute`}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/images/hero-woman.svg"
+                src="/images/hero-woman.webp"
                 alt=""
                 width={400}
                 height={320}

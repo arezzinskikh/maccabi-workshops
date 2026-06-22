@@ -11,7 +11,6 @@
 
 .breadcrumb {
   padding: 2.08vw 18.23vw 0;
-  background-color: var(--color2);
   display: flex;
   align-items: center;
   font-size: clamp(12px, 0.83vw + 2px, 16px);
@@ -38,27 +37,17 @@
   color: var(--color1);
 }
 
-.layout {
-  display: flex;
-  padding: 2.08vw 18.23vw 4vw;
-  gap: 3vw;
-  align-items: flex-start;
-}
-
-.sidebar {
-  width: 14vw;
-  min-width: 140px;
-  flex-shrink: 0;
+.backRow {
+  padding: 1.04vw 18.23vw 0;
 }
 
 .backLink {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 4px;
   color: var(--color1);
   font-size: clamp(12px, 0.83vw + 2px, 16px);
   font-weight: 400;
-  margin-bottom: 1.5vw;
   transition: color 0.2s;
 }
 
@@ -67,52 +56,65 @@
 }
 
 .backArrow {
-  font-size: 1.1em;
+  font-size: 1.2em;
 }
 
-.categoryNav {
+.section {
+  padding: 1.56vw 18.23vw 4vw;
+}
+
+/* Horizontal category tabs matching the original */
+.categoryTabs {
   display: flex;
-  flex-direction: column;
-  gap: 0.5vw;
+  align-items: center;
+  gap: 1.04vw;
+  flex-wrap: wrap;
+  margin-bottom: 2.08vw;
 }
 
-.categoryNavLink {
-  display: block;
-  padding: 0.63vw 1vw;
-  border-radius: 0.52vw;
+.categoryTab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.52vw 1.04vw;
+  border-radius: 5.21vw;
+  border: 1px solid var(--color1);
   color: var(--color1);
   font-size: clamp(12px, 0.83vw + 2px, 16px);
   font-weight: 400;
+  white-space: nowrap;
   transition: background-color 0.2s, color 0.2s;
-  border: 1px solid transparent;
+  background-color: transparent;
 }
 
-.categoryNavLink:hover {
+.categoryTab:hover {
   background-color: var(--color7);
-  border-color: var(--color6);
 }
 
-.categoryNavLink.active {
-  background-color: var(--color1);
-  color: var(--color2);
+.categoryTab.active {
+  background-color: var(--color7);
+  border-color: var(--color1);
   font-weight: 700;
 }
 
-.content {
-  flex: 1;
-}
-
-.pageTitle {
+.sectionTitle {
+  font-size: clamp(16px, 1.15vw + 4px, 22px);
+  font-weight: 700;
   color: var(--color1);
-  font-size: clamp(18px, 1.77vw + 3px, 32px);
-  font-weight: 700;
-  margin-bottom: 1.5vw;
+  margin-bottom: 1.56vw;
+  direction: rtl;
 }
 
-.workshopsGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: clamp(12px, 1.04vw, 24px);
+/* Workshop list matching the original's flex layout */
+.workshopsArea {
+  width: 100%;
+}
+
+.workshopsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(12px, 1.04vw, 20px);
+  justify-content: flex-end;
 }
 
 .empty {
@@ -123,45 +125,33 @@
 
 @media (max-width: 1024px) {
   .breadcrumb,
-  .layout {
+  .backRow,
+  .section {
     padding-inline: 32px;
-  }
-
-  .sidebar {
-    width: 160px;
   }
 }
 
 @media (max-width: 768px) {
   .breadcrumb,
-  .layout {
+  .backRow,
+  .section {
     padding-inline: 16px;
   }
 
-  .layout {
-    flex-direction: column;
-    gap: 24px;
-    padding-top: 16px;
-  }
-
-  .sidebar {
-    width: 100%;
-    min-width: unset;
-  }
-
-  .categoryNav {
-    flex-direction: row;
-    flex-wrap: wrap;
+  .categoryTabs {
     gap: 8px;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 4px;
   }
 
-  .categoryNavLink {
-    padding: 8px 12px;
-    border: 1px solid var(--color1);
-    border-radius: 100vw;
+  .categoryTab {
+    padding: 8px 14px;
+    font-size: 13px;
+    flex-shrink: 0;
   }
 
-  .workshopsGrid {
-    grid-template-columns: 1fr;
+  .workshopsList {
+    justify-content: center;
   }
 }

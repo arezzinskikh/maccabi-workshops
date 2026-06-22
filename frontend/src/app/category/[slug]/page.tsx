@@ -3,20 +3,23 @@ import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import WorkshopCard from '@/components/WorkshopCard';
-import { getCategories, getCategoryBySlug, getWorkshopsByCategory } from '@/lib/api';
+import { getCategories, getCategoryBySlug, getWorkshopsByCategory, FALLBACK_WORKSHOPS, type Category } from '@/lib/api';
 import styles from './page.module.css';
 
 interface Props {
   params: { slug: string };
 }
 
+const FALLBACK_CATEGORIES: Category[] = [
+  { id: 1, documentId: '1', name: 'תזונה לחיים בריאים', slug: 'nutrition', icon_url: '/images/icons/meal.svg', sort_order: 1, createdAt: '', updatedAt: '' },
+  { id: 2, documentId: '2', name: 'מפסיקים לעשן', slug: 'quit-smoking', icon_url: '/images/icons/smoking.svg', sort_order: 2, createdAt: '', updatedAt: '' },
+  { id: 3, documentId: '3', name: 'קשר משפחתי', slug: 'family', icon_url: '/images/icons/family.svg', sort_order: 3, createdAt: '', updatedAt: '' },
+  { id: 4, documentId: '4', name: 'לנהל את הסוכרת', slug: 'diabetes', icon_url: '/images/icons/heart.svg', sort_order: 4, createdAt: '', updatedAt: '' },
+  { id: 5, documentId: '5', name: 'גיל שלישי', slug: 'seniors', icon_url: '/images/icons/seniors.svg', sort_order: 5, createdAt: '', updatedAt: '' },
+];
+
 export async function generateStaticParams() {
-  try {
-    const categories = await getCategories();
-    return categories.map((cat) => ({ slug: cat.slug }));
-  } catch {
-    return [];
-  }
+  return FALLBACK_CATEGORIES.map((cat) => ({ slug: cat.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -31,20 +34,30 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   } catch {
     // ignore
   }
-  return { title: 'מכבי סדנאות' };
+  const fallback = FALLBACK_CATEGORIES.find((c) => c.slug === params.slug);
+  return { title: fallback ? `${fallback.name} - מכבי סדנאות` : 'מכבי סדנאות' };
 }
 
 export default async function CategoryPage({ params }: Props) {
-  const [categories, category] = await Promise.all([
-    getCategories().catch(() => []),
-    getCategoryBySlug(params.slug).catch(() => null),
-  ]);
+  let categories = FALLBACK_CATEGORIES;
+  let workshops = FALLBACK_WORKSHOPS[params.slug] ?? [];
 
-  const workshops = category
-    ? await getWorkshopsByCategory(params.slug).catch(() => [])
-    : [];
+  try {
+    const [fetchedCategories, fetchedCategory] = await Promise.all([
+      getCategories(),
+      getCategoryBySlug(params.slug),
+    ]);
+    if (fetchedCategories.length > 0) categories = fetchedCategories;
+    if (fetchedCategory) {
+      const fetched = await getWorkshopsByCategory(params.slug).catch(() => []);
+      if (fetched.length > 0) workshops = fetched;
+    }
+  } catch {
+    // CMS not connected — use fallback data
+  }
 
-  const displayName = category?.name || decodeURIComponent(params.slug);
+  const currentCategory = categories.find((c) => c.slug === params.slug);
+  const displayName = currentCategory?.name || decodeURIComponent(params.slug);
 
   return (
     <div className={styles.page}>
@@ -56,39 +69,38 @@ export default async function CategoryPage({ params }: Props) {
           <span className={styles.breadcrumbCurrent}>{displayName}</span>
         </div>
 
-        <div className={styles.layout}>
-          <nav className={styles.sidebar} aria-label="קטגוריות">
-            <Link href="/" className={styles.backLink}>
-              <span className={styles.backArrow}>‹</span>
-              <span>חזרה</span>
-            </Link>
-            <ul className={styles.categoryNav}>
-              {categories.map((cat) => (
-                <li key={cat.id}>
-                  <Link
-                    href={`/category/${cat.slug}`}
-                    className={`${styles.categoryNavLink} ${cat.slug === params.slug ? styles.active : ''}`}
-                  >
-                    {cat.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+        <div className={styles.backRow}>
+          <Link href="/" className={styles.backLink}>
+            <span className={styles.backArrow}>‹</span>
+            <span>חזרה</span>
+          </Link>
+        </div>
 
-          <section className={styles.content}>
-            <h1 className={styles.pageTitle}>סדנאות בנושא {displayName}</h1>
+        <section className={styles.section}>
+          <div className={styles.categoryTabs}>
+            {categories.map((cat) => (
+              <Link
+                key={cat.id}
+                href={`/category/${cat.slug}`}
+                className={`${styles.categoryTab} ${cat.slug === params.slug ? styles.active : ''}`}
+              >
+                {cat.name}
+              </Link>
+            ))}
+          </div>
+
+          <div className={styles.workshopsArea}>
             {workshops.length === 0 ? (
               <p className={styles.empty}>אין סדנאות זמינות כרגע בקטגוריה זו.</p>
             ) : (
-              <div className={styles.workshopsGrid}>
+              <div className={styles.workshopsList}>
                 {workshops.map((workshop) => (
                   <WorkshopCard key={workshop.id} workshop={workshop} />
                 ))}
               </div>
             )}
-          </section>
-        </div>
+          </div>
+        </section>
       </main>
       <Footer />
     </div>
