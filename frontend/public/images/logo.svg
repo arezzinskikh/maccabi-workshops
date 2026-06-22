@@ -1,0 +1,6 @@
+<svg viewBox="0 0 160 55" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="מכבי">
+  <!-- Maccabi Star of David shield icon simplified -->
+  <polygon points="30,8 38,22 22,22" fill="white" opacity="0.9"/>
+  <polygon points="30,36 38,22 22,22" fill="white" opacity="0.7"/>
+  <text x="50" y="38" font-family="Heebo,Arial,sans-serif" font-size="30" font-weight="700" fill="white" direction="rtl">מכבי</text>
+</svg>

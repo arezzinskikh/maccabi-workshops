@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+*/node_modules/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Build outputs
+.next/
+dist/
+build/
+.strapi/
+.cache/
+
+# Database (local SQLite)
+*.db
+*.db-shm
+*.db-wal
+.tmp/
+
+# Uploads (user content)
+cms/public/uploads/*
+!cms/public/uploads/.gitkeep
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Misc
+.vercel
+*.tsbuildinfo

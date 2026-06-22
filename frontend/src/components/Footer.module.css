@@ -1,0 +1,39 @@
+.footer {
+  padding: 2.08vw 7.81vw;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: var(--color4);
+  border-top: 1px solid var(--color6);
+  margin-top: auto;
+}
+
+.links {
+  display: flex;
+  gap: 1.5vw;
+  align-items: center;
+}
+
+.link {
+  font-size: clamp(12px, 0.83vw + 2px, 18px);
+  color: var(--color1);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 400;
+  transition: color 0.3s;
+}
+
+.link:hover {
+  color: var(--color5);
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 16px 24px;
+    justify-content: center;
+  }
+
+  .links {
+    gap: 24px;
+  }
+}

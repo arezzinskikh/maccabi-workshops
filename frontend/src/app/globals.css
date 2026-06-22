@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --color1: #1E3C95;
+  --color2: #fff;
+  --color3: #000;
+  --color4: #E5E5E5;
+  --color5: #BE6090;
+  --color6: #DFB6C0;
+  --color7: #F4DCD9;
+  --color8: #F00;
+  --color9: #747474;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  direction: rtl;
+  font-family: 'Heebo', 'PloniMaccabiMLv2AAA-Regular', sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  scroll-behavior: smooth;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color4);
+  color: var(--color1);
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+}
+
+ul {
+  list-style-type: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  border-radius: 100vw;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color5);
+  border-radius: 100vw;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color1);
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}

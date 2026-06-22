@@ -1,0 +1,27 @@
+.header {
+  width: 100%;
+  height: 5.21vw;
+  min-height: 56px;
+  background-color: var(--color1);
+  z-index: 100;
+  position: sticky;
+  top: 0;
+}
+
+.container {
+  padding: 0 7.81vw;
+  height: 100%;
+  justify-content: flex-start;
+}
+
+.logoLink {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 7.71vw;
+  min-width: 80px;
+  max-width: 120px;
+  height: auto;
+}
