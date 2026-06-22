@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import type { Category } from '@/lib/api';
 import styles from './CategoryCard.module.css';
 
@@ -12,7 +11,8 @@ export default function CategoryCard({ category }: Props) {
     <Link href={`/category/${category.slug}`} className={styles.card}>
       <div className={`${styles.iconWrap} flex-center`}>
         {category.icon_url ? (
-          <Image src={category.icon_url} alt="" className={styles.icon} width={60} height={60} unoptimized />
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={category.icon_url} alt="" className={styles.icon} width={60} height={60} />
         ) : (
           <DefaultIcon className={styles.icon} />
         )}

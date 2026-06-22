@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import type { Workshop } from '@/lib/api';
 import { getStrapiImageUrl } from '@/lib/api';
 import styles from './WorkshopCard.module.css';
@@ -14,12 +13,12 @@ export default function WorkshopCard({ workshop }: Props) {
   return (
     <article className={styles.card}>
       <div className={styles.imageWrap}>
-        <Image
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
           src={imageUrl}
           alt={imageAlt}
-          fill
           className={styles.image}
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          loading="lazy"
         />
       </div>
       <div className={styles.body}>

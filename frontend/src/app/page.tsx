@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import CategoryCard from '@/components/CategoryCard';
@@ -35,12 +34,12 @@ export default async function HomePage() {
         <div className={styles.container}>
           <div className={`${styles.heroSection} relative`}>
             <div className={`${styles.heroImage} absolute`}>
-              <Image
-                src="/images/hero-woman.webp"
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/hero-woman.svg"
                 alt=""
                 width={400}
                 height={320}
-                priority
                 className={styles.heroImg}
               />
             </div>
