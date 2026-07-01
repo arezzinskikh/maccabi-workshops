@@ -79,7 +79,10 @@ function flattenWorkshop(item: any): Workshop {
     id: item.id,
     documentId: item.documentId ?? String(item.id),
     title: a.title,
-    slug: a.slug ?? '',
+    slug: a.slug ?? (() => {
+      const m = (a.registration_link ?? '').match(/\/workshops\/([^/]+)\/?$/);
+      return m ? decodeURIComponent(m[1]) : '';
+    })(),
     description: a.description,
     registration_link: a.registration_link,
     sort_order: a.sort_order,

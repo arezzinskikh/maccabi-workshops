@@ -17,6 +17,12 @@
       "required": true,
       "maxLength": 300
     },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": false,
+      "maxLength": 300
+    },
     "description": {
       "type": "text",
       "required": true
