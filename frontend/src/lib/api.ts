@@ -30,6 +30,9 @@ export interface Workshop {
   description: string;
   registration_link: string;
   sort_order: number;
+  hours: number | null;
+  age_range: string | null;
+  cost: string | null;
   image: {
     url: string;
     alternativeText: string | null;
@@ -94,6 +97,9 @@ function flattenWorkshop(item: any): Workshop {
           height: img.height,
         }
       : null,
+    hours: a.hours ?? null,
+    age_range: a.age_range ?? null,
+    cost: a.cost ?? null,
     category: catData ? flattenCategory(catData) : null,
     createdAt: a.createdAt,
     updatedAt: a.updatedAt,
@@ -159,6 +165,9 @@ const makeWorkshop = (
   categorySlug: string,
   imageUrl?: string,
   dates?: WorkshopDate[],
+  hours?: number,
+  age_range?: string,
+  cost?: string,
 ): Workshop => ({
   id,
   documentId: String(id),
@@ -167,6 +176,9 @@ const makeWorkshop = (
   description,
   registration_link: `https://workshops.maccabi4u.co.il/workshops/${encodeURIComponent(slug)}/`,
   sort_order: id,
+  hours: hours ?? null,
+  age_range: age_range ?? null,
+  cost: cost ?? null,
   image: imageUrl ? { url: imageUrl, alternativeText: title, width: 400, height: 200 } : null,
   category: null,
   createdAt: '',
@@ -240,4 +252,16 @@ export const FALLBACK_WORKSHOPS: Record<string, Workshop[]> = {
 
 export function getWorkshopBySlug(slug: string): Workshop | undefined {
   return Object.values(FALLBACK_WORKSHOPS).flat().find((w) => w.slug === slug);
+}
+
+export async function getWorkshopBySlugFromStrapi(slug: string): Promise<Workshop | null> {
+  try {
+    const res = await fetchStrapi<StrapiResponse<Workshop[]>>('/workshops', {
+      'filters[slug][$eq]': slug,
+      'populate': 'image,category',
+    });
+    return res.data[0] ? flattenWorkshop(res.data[0]) : null;
+  } catch {
+    return null;
+  }
 }

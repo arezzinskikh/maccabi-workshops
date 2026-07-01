@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import WorkshopRegistration from '@/components/WorkshopRegistration';
-import { FALLBACK_WORKSHOPS, getWorkshopBySlug, type Category } from '@/lib/api';
+import { FALLBACK_WORKSHOPS, getWorkshopBySlug, getWorkshopBySlugFromStrapi, type Category } from '@/lib/api';
 import styles from './page.module.css';
 
 interface Props {
@@ -45,10 +45,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return { title: 'מכבי סדנאות' };
 }
 
-export default function WorkshopPage({ params }: Props) {
+export default async function WorkshopPage({ params }: Props) {
   const slug = decodeURIComponent(params.slug);
-  const workshop = getWorkshopBySlug(slug);
-  const category = getCategoryForWorkshop(slug);
+  const strapiWorkshop = await getWorkshopBySlugFromStrapi(slug);
+  const workshop = strapiWorkshop ?? getWorkshopBySlug(slug);
+  const category = strapiWorkshop?.category ?? getCategoryForWorkshop(slug);
 
   if (!workshop) {
     return (
@@ -108,13 +109,29 @@ export default function WorkshopPage({ params }: Props) {
                 <p>
                   <span className={styles.boldTxt}>מחיר:</span>
                   {' '}
-                  <span>ללא תשלום</span>
+                  <span>{workshop.cost ?? 'ללא תשלום'}</span>
                 </p>
-                <p>
-                  <span className={styles.boldTxt}>למי זה מתאים:</span>
-                  {' '}
-                  <span>למשתתפים מגיל 18 ומעלה</span>
-                </p>
+                {workshop.age_range && (
+                  <p>
+                    <span className={styles.boldTxt}>למי זה מתאים:</span>
+                    {' '}
+                    <span>{workshop.age_range}</span>
+                  </p>
+                )}
+                {!workshop.age_range && (
+                  <p>
+                    <span className={styles.boldTxt}>למי זה מתאים:</span>
+                    {' '}
+                    <span>למשתתפים מגיל 18 ומעלה</span>
+                  </p>
+                )}
+                {workshop.hours != null && (
+                  <p>
+                    <span className={styles.boldTxt}>משך הסדנה:</span>
+                    {' '}
+                    <span>{workshop.hours} שעות</span>
+                  </p>
+                )}
               </div>
             </div>
           </div>

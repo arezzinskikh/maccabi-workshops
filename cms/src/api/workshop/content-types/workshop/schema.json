@@ -41,6 +41,20 @@
       "required": false,
       "allowedTypes": ["images"]
     },
+    "hours": {
+      "type": "decimal",
+      "required": false
+    },
+    "age_range": {
+      "type": "string",
+      "required": false,
+      "maxLength": 200
+    },
+    "cost": {
+      "type": "string",
+      "required": false,
+      "maxLength": 200
+    },
     "category": {
       "type": "relation",
       "relation": "manyToOne",
