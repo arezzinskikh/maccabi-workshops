@@ -43,6 +43,49 @@ interface StrapiResponse<T> {
   };
 }
 
+// Strapi v4 nests entity fields under `attributes` and relations/media under
+// `.data`; v5 returns them flat. Normalize both shapes to our flat interfaces.
+function flattenCategory(item: any): Category {
+  const a = item?.attributes ?? item ?? {};
+  return {
+    id: item.id,
+    documentId: item.documentId ?? String(item.id),
+    name: a.name,
+    slug: a.slug,
+    icon_url: a.icon_url ?? null,
+    sort_order: a.sort_order,
+    createdAt: a.createdAt,
+    updatedAt: a.updatedAt,
+  };
+}
+
+function flattenWorkshop(item: any): Workshop {
+  const a = item?.attributes ?? item ?? {};
+  const imgData = a.image?.data ?? a.image;
+  const img = imgData?.attributes ?? imgData;
+  const catData = a.category?.data ?? a.category;
+  return {
+    id: item.id,
+    documentId: item.documentId ?? String(item.id),
+    title: a.title,
+    slug: a.slug ?? '',
+    description: a.description,
+    registration_link: a.registration_link,
+    sort_order: a.sort_order,
+    image: img?.url
+      ? {
+          url: img.url,
+          alternativeText: img.alternativeText ?? null,
+          width: img.width,
+          height: img.height,
+        }
+      : null,
+    category: catData ? flattenCategory(catData) : null,
+    createdAt: a.createdAt,
+    updatedAt: a.updatedAt,
+  };
+}
+
 async function fetchStrapi<T>(path: string, params?: Record<string, string>): Promise<T> {
   const url = new URL(`/api${path}`, STRAPI_URL);
   if (params) {
@@ -66,14 +109,14 @@ export async function getCategories(): Promise<Category[]> {
     'sort': 'sort_order:asc',
     'pagination[pageSize]': '25',
   });
-  return res.data;
+  return res.data.map(flattenCategory);
 }
 
 export async function getCategoryBySlug(slug: string): Promise<Category | null> {
   const res = await fetchStrapi<StrapiResponse<Category[]>>('/categories', {
     'filters[slug][$eq]': slug,
   });
-  return res.data[0] || null;
+  return res.data[0] ? flattenCategory(res.data[0]) : null;
 }
 
 export async function getWorkshopsByCategory(categorySlug: string): Promise<Workshop[]> {
@@ -83,7 +126,7 @@ export async function getWorkshopsByCategory(categorySlug: string): Promise<Work
     'sort': 'sort_order:asc',
     'pagination[pageSize]': '50',
   });
-  return res.data;
+  return res.data.map(flattenWorkshop);
 }
 
 export function getStrapiImageUrl(url: string | null | undefined): string {
