@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import type { Workshop } from '@/lib/api';
 import { getStrapiImageUrl } from '@/lib/api';
 import styles from './WorkshopCard.module.css';
@@ -11,30 +12,18 @@ export default function WorkshopCard({ workshop }: Props) {
   const imageAlt = workshop.image?.alternativeText || workshop.title;
 
   return (
-    <article className={styles.card}>
-      <div className={styles.imageWrap}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={imageUrl}
-          alt={imageAlt}
-          className={styles.image}
-          loading="lazy"
-        />
-      </div>
-      <div className={styles.body}>
-        <h3 className={styles.title}>{workshop.title}</h3>
+    <Link href={`/workshops/${encodeURIComponent(workshop.slug)}`} className={styles.card}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img className={styles.image} src={imageUrl} alt={imageAlt} aria-hidden="true" />
+      <h3 className={styles.title}>{workshop.title}</h3>
+      <div className={styles.hr} />
+      <div className={styles.descWrap}>
         <p className={styles.description}>{workshop.description}</p>
-        {workshop.registration_link && (
-          <a
-            href={workshop.registration_link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.ctaButton}
-          >
-            למידע והרשמה
-          </a>
-        )}
       </div>
-    </article>
+      <div className={styles.cta}>
+        <span className={styles.ctaText}>למידע והרשמה</span>
+        <span className={styles.ctaArrow} />
+      </div>
+    </Link>
   );
 }

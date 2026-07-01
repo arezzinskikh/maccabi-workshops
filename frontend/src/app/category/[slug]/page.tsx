@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import WorkshopCard from '@/components/WorkshopCard';
@@ -9,6 +10,14 @@ import styles from './page.module.css';
 interface Props {
   params: { slug: string };
 }
+
+const SECTION_TITLES: Record<string, string> = {
+  'nutrition': 'סדנאות בנושא תזונה',
+  'quit-smoking': 'סדנאות בנושא עישון',
+  'family': 'סדנאות בנושא קשר משפחתי',
+  'diabetes': 'סדנאות בנושא סוכרת',
+  'seniors': 'סדנאות בנושא גיל שלישי',
+};
 
 const FALLBACK_CATEGORIES: Category[] = [
   { id: 1, documentId: '1', name: 'תזונה לחיים בריאים', slug: 'nutrition', icon_url: '/images/icons/meal.svg', sort_order: 1, createdAt: '', updatedAt: '' },
@@ -58,23 +67,27 @@ export default async function CategoryPage({ params }: Props) {
 
   const currentCategory = categories.find((c) => c.slug === params.slug);
   const displayName = currentCategory?.name || decodeURIComponent(params.slug);
+  const sectionTitle = SECTION_TITLES[params.slug];
 
   return (
     <div className={styles.page}>
       <Header />
       <main className={styles.main}>
-        <div className={styles.breadcrumb}>
-          <Link href="/" className={styles.breadcrumbLink}>עמוד הבית</Link>
-          <span className={styles.breadcrumbSep}>&nbsp;&gt;&nbsp;</span>
-          <span className={styles.breadcrumbCurrent}>{displayName}</span>
+        <div className={styles.breadcrumbSection}>
+          <div className={styles.breadcrumb}>
+            <Link href="/" className={styles.breadcrumbLink}>עמוד הבית</Link>
+            <span className={styles.breadcrumbSep}>&nbsp;&nbsp;&gt;&nbsp;&nbsp;</span>
+            <p className={styles.breadcrumbCurrent}>{displayName}</p>
+          </div>
         </div>
 
-        <div className={styles.backRow}>
-          <Link href="/" className={styles.backLink}>
-            <span className={styles.backArrow}>‹</span>
+        <Link href="/" className={styles.backRow}>
+          <span className={styles.backLink}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/back-arrow.svg" alt="" aria-hidden="true" className={styles.backArrowImg} />
             <span>חזרה</span>
-          </Link>
-        </div>
+          </span>
+        </Link>
 
         <section className={styles.section}>
           <div className={styles.categoryTabs}>
@@ -84,12 +97,17 @@ export default async function CategoryPage({ params }: Props) {
                 href={`/category/${cat.slug}`}
                 className={`${styles.categoryTab} ${cat.slug === params.slug ? styles.active : ''}`}
               >
-                {cat.name}
+                <p>{cat.name}</p>
               </Link>
             ))}
           </div>
 
           <div className={styles.workshopsArea}>
+            {sectionTitle && (
+              <h1 className={styles.sectionTitle}>
+                <p>{sectionTitle}</p>
+              </h1>
+            )}
             {workshops.length === 0 ? (
               <p className={styles.empty}>אין סדנאות זמינות כרגע בקטגוריה זו.</p>
             ) : (

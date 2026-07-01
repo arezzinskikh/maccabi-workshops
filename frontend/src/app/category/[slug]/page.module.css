@@ -9,27 +9,31 @@
   flex: 1;
 }
 
-.breadcrumb {
+.breadcrumbSection {
   padding: 2.08vw 18.23vw 0;
+  background-color: var(--color2);
+}
+
+.breadcrumb {
+  font-size: calc(.83vw + 2px);
+  line-height: 1;
+  color: var(--color1);
+  font-weight: 400;
   display: flex;
   align-items: center;
-  font-size: clamp(12px, 0.83vw + 2px, 16px);
-  color: var(--color1);
 }
 
 .breadcrumbLink {
   color: var(--color1);
-  transition: color 0.2s;
 }
 
 .breadcrumbLink:hover {
-  color: var(--color5);
   text-decoration: underline;
 }
 
 .breadcrumbSep {
+  margin: 0 4px;
   color: var(--color1);
-  opacity: 0.5;
 }
 
 .breadcrumbCurrent {
@@ -38,83 +42,90 @@
 }
 
 .backRow {
+  width: fit-content;
   padding: 1.04vw 18.23vw 0;
 }
 
 .backLink {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   color: var(--color1);
-  font-size: clamp(12px, 0.83vw + 2px, 16px);
+  font-size: calc(.83vw + 2px);
   font-weight: 400;
-  transition: color 0.2s;
+  line-height: 1;
 }
 
 .backLink:hover {
-  color: var(--color5);
+  text-decoration: underline;
 }
 
-.backArrow {
-  font-size: 1.2em;
+.backArrowImg {
+  width: .99vw;
+  min-width: 10px;
+  position: relative;
+  top: -0.05vw;
 }
 
 .section {
-  padding: 1.56vw 18.23vw 4vw;
+  padding: 0 18.23vw 2.5vw;
 }
 
-/* Horizontal category tabs matching the original */
 .categoryTabs {
   display: flex;
   align-items: center;
   gap: 1.04vw;
   flex-wrap: wrap;
-  margin-bottom: 2.08vw;
+  margin-top: 1.04vw;
+  justify-content: flex-start;
 }
 
 .categoryTab {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.52vw 1.04vw;
+  height: 2.08vw;
+  min-height: 28px;
+  padding: .52vw 1.04vw;
   border-radius: 5.21vw;
   border: 1px solid var(--color1);
+  background-color: var(--color2);
   color: var(--color1);
-  font-size: clamp(12px, 0.83vw + 2px, 16px);
+  font-size: calc(.83vw + 2px);
+  line-height: 1;
   font-weight: 400;
   white-space: nowrap;
-  transition: background-color 0.2s, color 0.2s;
-  background-color: transparent;
+  transition: background-color 0.2s;
+  text-decoration: none;
 }
 
 .categoryTab:hover {
-  background-color: var(--color7);
+  background-color: var(--color6);
 }
 
 .categoryTab.active {
-  background-color: var(--color7);
-  border-color: var(--color1);
-  font-weight: 700;
+  background-color: var(--color6);
+}
+
+.workshopsArea {
+  position: relative;
+  width: 100%;
 }
 
 .sectionTitle {
-  font-size: clamp(16px, 1.15vw + 4px, 22px);
-  font-weight: 700;
   color: var(--color1);
-  margin-bottom: 1.56vw;
-  direction: rtl;
-}
-
-/* Workshop list matching the original's flex layout */
-.workshopsArea {
-  width: 100%;
+  font-size: calc(1.67vw + 3px);
+  font-weight: 700;
+  line-height: 1;
+  padding: .78vw 0;
+  margin: 0;
 }
 
 .workshopsList {
   display: flex;
   flex-wrap: wrap;
-  gap: clamp(12px, 1.04vw, 20px);
-  justify-content: flex-end;
+  gap: 1.04vw;
+  justify-content: flex-start;
 }
 
 .empty {
@@ -124,15 +135,22 @@
 }
 
 @media (max-width: 1024px) {
-  .breadcrumb,
+  .breadcrumbSection,
   .backRow,
   .section {
     padding-inline: 32px;
   }
+
+  .categoryTabs {
+    gap: 8px;
+  }
 }
 
 @media (max-width: 768px) {
-  .breadcrumb,
+  .breadcrumbSection {
+    padding: 16px 16px 0;
+  }
+
   .backRow,
   .section {
     padding-inline: 16px;
@@ -149,9 +167,17 @@
     padding: 8px 14px;
     font-size: 13px;
     flex-shrink: 0;
+    height: auto;
+    min-height: unset;
+  }
+
+  .sectionTitle {
+    font-size: calc(5.12vw + 3px);
+    padding: 16px 0 8px;
   }
 
   .workshopsList {
+    gap: 12px;
     justify-content: center;
   }
 }

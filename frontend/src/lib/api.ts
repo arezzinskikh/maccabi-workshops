@@ -16,6 +16,7 @@ export interface Workshop {
   id: number;
   documentId: string;
   title: string;
+  slug: string;
   description: string;
   registration_link: string;
   sort_order: number;
@@ -97,8 +98,9 @@ const makeWorkshop = (id: number, slug: string, title: string, description: stri
   id,
   documentId: String(id),
   title,
+  slug,
   description,
-  registration_link: `https://workshops.maccabi4u.co.il/${categorySlug === 'nutrition' ? '%D7%AA%D7%96%D7%95%D7%A0%D7%94-%D7%9C%D7%97%D7%99%D7%99%D7%9D-%D7%91%D7%A8%D7%99%D7%90%D7%99%D7%9D' : slug}/`,
+  registration_link: `https://workshops.maccabi4u.co.il/workshops/${encodeURIComponent(slug)}/`,
   sort_order: id,
   image: imageUrl ? { url: imageUrl, alternativeText: title, width: 400, height: 200 } : null,
   category: null,
@@ -113,9 +115,9 @@ export const FALLBACK_WORKSHOPS: Record<string, Workshop[]> = {
     makeWorkshop(3, 'מכבי-קל-קיצור-קיבה-בריאטריה', 'מכבי קל – קיצור קיבה בריאטריה', 'קבוצה לשימור אורח חיים בריא למטופלים שעברו ניתוח קיצור קיבה', 'nutrition', `${BASE}/2024/07/ICON-2.webp`),
     makeWorkshop(4, 'מכבי-קל-קיצור-קיבה-המשך', 'מכבי קל – קיצור קיבה המשך', 'קבוצת המשך למטופלים שעברו ניתוח קיצור קיבה, לשימור אורח חיים בריא', 'nutrition', `${BASE}/2024/07/ICON-5.webp`),
     makeWorkshop(5, 'מכבי-אקטיבי-ילדים-ומתבגרים', 'מכבי אקטיבי – ילדים ומתבגרים', 'תכנית לשיפור אורח חיים בריא אצל ילדים ונוער בעלי עודף משקל בליווי צוות מקצועי', 'nutrition', `${BASE}/2024/07/ICON-4-1.webp`),
-    makeWorkshop(6, 'הרצאה-טרום-ניתוח-בריאטרי', 'הרצאה טרום ניתוח בריאטרי', 'הרצאה בת שעה וחצי, שמטרתה מתן מידע למתעניינים בניתוח בריאטרי לקראת הניתוח', 'nutrition', `${BASE}/2024/10/shutterstock_1915529911-scaled.jpg`),
+    makeWorkshop(6, 'הרצאה-טרום-ניתוח-בריאטרי', 'הרצאה טרום ניתוח בריאטרי', 'הרצאה בת שעה וחצי, שמטרתה מתן מידע למתעניינים בניתוח בריאטרי לקראת הניתוח. ההרצאה כוללת מידע בנושאים: משמעות הניתוח, סוגי הניתוחים השונים וההבדלים בינהם, מי זכאי לבצע הניתוח, סיבוכים אפשריים, תהליך ההכנה לקראת הניתוח, שינויים תזונתיים ורגשיים לאחר הניתוח ואפשרויות המעקב בצוות רב מקצועי במכבי.', 'nutrition', `${BASE}/2024/10/shutterstock_1915529911-scaled.jpg`),
     makeWorkshop(7, 'משפחה-בסגנון-בריא', 'משפחה בסגנון בריא', 'קבוצה להורים לילדים עם עודף משקל, המסייעת להם ביצירת אורח חיים בריא', 'nutrition', `${BASE}/2024/08/%D7%9E%D7%A9%D7%A4%D7%97%D7%94-%D7%91%D7%A1%D7%92%D7%A0%D7%95%D7%9F-%D7%91%D7%A8%D7%99%D7%90-%D7%9E%D7%95%D7%91%D7%99%D7%99%D7%9C.webp`),
-    makeWorkshop(8, 'משפחה-בסגנון-בריא-טיפול-תרופתי', 'משפחה בסגנון בריא – בליווי טיפול תרופתי', 'קבוצת הדרכה להורים למתבגרים (12-18 שנים), אשר ילדיהם עומדים בתנאי הזכאות לקבלת טיפול תרופתי לירידה במשקל', 'nutrition', `${BASE}/2025/01/shutterstock_2413033271-scaled.jpg`),
+    makeWorkshop(8, 'משפחה-בסגנון-בריא-טיפול-תרופתי', 'משפחה בסגנון בריא – בליווי טיפול תרופתי להשמנה במתבגרים', 'קבוצת הדרכה להורים למתבגרים (12-18 שנים), אשר ילדיהם עומדים בכל תנאי הזכאות לקבלת טיפול תרופתי לירידה במשקל, כמפורט בזכאות באתר מכבי.', 'nutrition', `${BASE}/2025/01/shutterstock_2413033271-scaled.jpg`),
     makeWorkshop(9, 'בטן-מלאה-באהבה', 'בטן מלאה באהבה – תזונה בהריון', 'תוכנית ייחודית של 4 מפגשים לנשים בהריון: תזונה נכונה, ויטמינים, מינרלים, בטיחות מזון ועוד', 'nutrition', `${BASE}/2025/04/pregnant.webp`),
   ],
   'quit-smoking': [
@@ -136,3 +138,7 @@ export const FALLBACK_WORKSHOPS: Record<string, Workshop[]> = {
     makeWorkshop(18, 'ניהול-הבריאות-בגיל-השלישי', 'ניהול הבריאות בגיל השלישי', 'סדנה של 7 מפגשים המעניקה ידע וכלים לניהול הבריאות בגיל השלישי, פיתוח אוריינות בריאותית ואורח חיים פעיל ובריא', 'seniors', `${BASE}/2025/01/shutterstock_1185179020-scaled.jpg`),
   ],
 };
+
+export function getWorkshopBySlug(slug: string): Workshop | undefined {
+  return Object.values(FALLBACK_WORKSHOPS).flat().find((w) => w.slug === slug);
+}
