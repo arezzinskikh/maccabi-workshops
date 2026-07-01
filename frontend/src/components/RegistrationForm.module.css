@@ -1,0 +1,449 @@
+/* ── CTA button ── */
+.registerBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .52vw;
+  height: 2.86vw;
+  min-height: 40px;
+  padding: 0 1.56vw;
+  background-color: var(--color1);
+  color: var(--color2);
+  border: none;
+  border-radius: 5.21vw;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  font-size: calc(.83vw + 2px);
+  font-weight: 700;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.registerBtn:hover {
+  opacity: 0.85;
+}
+
+.registerBtnText {
+  line-height: 1;
+}
+
+.registerBtnArrow {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid var(--color2);
+  border-bottom: 2px solid var(--color2);
+  transform: rotate(135deg);
+  margin-top: 2px;
+}
+
+/* ── Overlay ── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.45);
+  z-index: 1000;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.overlayClosing {
+  animation: fadeOut 0.5s ease forwards;
+}
+
+/* ── Slide-in panel ── */
+.formContent {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 26.51vw;
+  min-width: 300px;
+  height: 100%;
+  background-color: var(--color1);
+  z-index: 1001;
+  overflow-y: auto;
+  direction: rtl;
+  animation: slideIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.formContentClosing {
+  animation: slideOut 0.5s cubic-bezier(0.55, 0, 0.1, 1) forwards;
+}
+
+.wrapperForm {
+  padding: 2.6vw 2.08vw 2.08vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100%;
+}
+
+/* ── Close button ── */
+.closeBtn {
+  position: absolute;
+  top: 1.04vw;
+  left: 1.04vw;
+  width: 2.08vw;
+  min-width: 24px;
+  height: 2.08vw;
+  min-height: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 0;
+}
+
+.closeBtn span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background-color: var(--color2);
+  transform-origin: center;
+  transition: transform 0.2s;
+}
+
+.closeBtn span:first-child {
+  transform: rotate(45deg) translateY(3.5px);
+}
+
+.closeBtn span:last-child {
+  transform: rotate(-45deg) translateY(-3.5px);
+}
+
+.closeBtn:hover span {
+  background-color: var(--color6);
+}
+
+/* ── Logo ── */
+.logoHref {
+  display: block;
+  margin-bottom: 1.56vw;
+  margin-top: 1.04vw;
+}
+
+.logoImg {
+  width: 7.81vw;
+  min-width: 80px;
+  max-width: 140px;
+  filter: brightness(0) invert(1);
+}
+
+/* ── Form ── */
+.containerForm {
+  width: 100%;
+  color: var(--color2);
+}
+
+.containerForm h3 {
+  font-size: calc(.83vw + 4px);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--color2);
+  margin: 0 0 .52vw;
+  text-align: right;
+}
+
+.must {
+  font-size: calc(.52vw + 10px);
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 1.04vw;
+  text-align: right;
+  line-height: 1.3;
+}
+
+.fieldsSection {
+  display: flex;
+  flex-direction: column;
+  gap: .78vw;
+}
+
+/* ── Field ── */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fieldPlaceholder {
+  font-size: calc(.52vw + 10px);
+  color: var(--color2);
+  font-weight: 400;
+  line-height: 1;
+  text-align: right;
+}
+
+.fieldInput {
+  width: 100%;
+  height: 2.34vw;
+  min-height: 36px;
+  background-color: var(--color2);
+  border: 1px solid transparent;
+  border-radius: .52vw;
+  padding: 0 .78vw;
+  font-size: calc(.52vw + 10px);
+  color: var(--color1);
+  font-family: inherit;
+  direction: rtl;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.fieldInput:focus {
+  border-color: var(--color5);
+}
+
+.field.fieldError .fieldInput {
+  border-color: #f87474;
+}
+
+.errorMsg {
+  font-size: 11px;
+  color: #f87474;
+  text-align: right;
+}
+
+/* ── Checkbox ── */
+.fieldCheckbox {
+  margin-top: .26vw;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  cursor: pointer;
+  direction: rtl;
+}
+
+.checkboxInput {
+  display: none;
+}
+
+.checkboxCustom {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--color2);
+  border-radius: 3px;
+  background-color: transparent;
+  margin-top: 2px;
+  transition: background-color 0.2s;
+  position: relative;
+}
+
+.checkboxInput:checked + .checkboxCustom {
+  background-color: var(--color5);
+  border-color: var(--color5);
+}
+
+.checkboxInput:checked + .checkboxCustom::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 0;
+  width: 4px;
+  height: 8px;
+  border-right: 2px solid white;
+  border-bottom: 2px solid white;
+  transform: rotate(45deg);
+}
+
+.checkboxTitle {
+  font-size: calc(.52vw + 10px);
+  color: var(--color2);
+  line-height: 1.4;
+  text-align: right;
+}
+
+/* ── Submit ── */
+.sendBtn {
+  margin-top: .52vw;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.submitBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .52vw;
+  height: 2.86vw;
+  min-height: 40px;
+  padding: 0 1.56vw;
+  background-color: var(--color5);
+  color: var(--color2);
+  border: none;
+  border-radius: 5.21vw;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  font-size: calc(.83vw + 2px);
+  font-weight: 700;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.submitBtn:hover {
+  opacity: 0.85;
+}
+
+.submitBtnText {
+  line-height: 1;
+}
+
+.submitBtnArrow {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid var(--color2);
+  border-bottom: 2px solid var(--color2);
+  transform: rotate(135deg);
+  margin-top: 2px;
+}
+
+/* ── Success message ── */
+.successMsg {
+  color: var(--color2);
+  text-align: center;
+  padding: 2vw 0;
+  width: 100%;
+}
+
+.successMsg h3 {
+  font-size: calc(1vw + 4px);
+  font-weight: 700;
+  margin-bottom: .78vw;
+}
+
+.successMsg p {
+  font-size: calc(.52vw + 10px);
+  line-height: 1.5;
+  margin-bottom: 1.56vw;
+  opacity: 0.9;
+}
+
+.closeSuccessBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.86vw;
+  min-height: 40px;
+  padding: 0 1.56vw;
+  background-color: var(--color5);
+  color: var(--color2);
+  border: none;
+  border-radius: 5.21vw;
+  cursor: pointer;
+  font-size: calc(.83vw + 2px);
+  font-weight: 700;
+  font-family: inherit;
+  transition: opacity 0.2s;
+}
+
+.closeSuccessBtn:hover {
+  opacity: 0.85;
+}
+
+/* ── Keyframes ── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes slideOut {
+  from { transform: translateX(0); }
+  to { transform: translateX(110%); }
+}
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  .formContent {
+    top: auto;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    min-width: unset;
+    height: auto;
+    max-height: 90vh;
+    border-radius: 16px 16px 0 0;
+    animation: slideUp 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+
+  .formContentClosing {
+    animation: slideDown 0.5s cubic-bezier(0.55, 0, 0.1, 1) forwards;
+  }
+
+  .wrapperForm {
+    padding: 24px 20px 32px;
+  }
+
+  .closeBtn {
+    top: 16px;
+    left: 16px;
+    min-width: 28px;
+    min-height: 28px;
+    width: 28px;
+    height: 28px;
+  }
+
+  .logoImg {
+    width: 80px;
+  }
+
+  .containerForm h3 {
+    font-size: 16px;
+  }
+
+  .must {
+    font-size: 12px;
+  }
+
+  .fieldInput {
+    min-height: 42px;
+    font-size: 14px;
+    border-radius: 8px;
+    padding: 0 12px;
+  }
+
+  .fieldsSection {
+    gap: 10px;
+  }
+
+  .submitBtn,
+  .closeSuccessBtn {
+    min-height: 44px;
+    font-size: 15px;
+    padding: 0 24px;
+  }
+
+  .registerBtn {
+    min-height: 44px;
+    font-size: 15px;
+    padding: 0 20px;
+  }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  from { transform: translateY(0); }
+  to { transform: translateY(110%); }
+}

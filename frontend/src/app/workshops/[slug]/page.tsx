@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import WorkshopRegistration from '@/components/WorkshopRegistration';
 import { FALLBACK_WORKSHOPS, getWorkshopBySlug, type Category } from '@/lib/api';
 import styles from './page.module.css';
 
@@ -120,35 +121,7 @@ export default function WorkshopPage({ params }: Props) {
 
           <div className={styles.hrWorkshop} />
 
-          <div className={styles.workshopContainerAct}>
-            <h3>איך נוח לך להשתתף?</h3>
-            <div className={styles.workshopTypeContainer}>
-              <button className={styles.workshopTypeBtn} type="button">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/images/icons/camera.svg" alt="" aria-hidden="true" className={styles.typeIcon} />
-                <span>סדנה מקוונת</span>
-              </button>
-              <button className={styles.workshopTypeBtn} type="button">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/images/icons/house.svg" alt="" aria-hidden="true" className={styles.typeIcon} />
-                <span>סדנה פרונטאלית</span>
-              </button>
-            </div>
-
-            <div className={styles.registrationArea}>
-              <p className={styles.registrationNote}>
-                לצפייה במועדי הסדנאות ולהרשמה, עברו לאתר מכבי סדנאות:
-              </p>
-              <a
-                href={workshop.registration_link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.registrationBtn}
-              >
-                למידע והרשמה
-              </a>
-            </div>
-          </div>
+          <WorkshopRegistration workshop={workshop} />
         </section>
       </main>
       <Footer />
