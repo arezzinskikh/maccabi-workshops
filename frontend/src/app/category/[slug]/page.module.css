@@ -122,16 +122,21 @@
 }
 
 .workshopsList {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.04vw;
-  justify-content: flex-start;
 }
 
 .empty {
   color: var(--color9);
   font-size: clamp(14px, 0.93vw + 2px, 18px);
   padding: 40px 0;
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .workshopsList {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 1024px) {
@@ -177,7 +182,7 @@
   }
 
   .workshopsList {
+    grid-template-columns: 1fr;
     gap: 12px;
-    justify-content: center;
   }
 }
