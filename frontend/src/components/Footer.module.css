@@ -1,26 +1,29 @@
 .footer {
-  padding: 2.08vw 7.81vw;
+  position: relative;
+  z-index: 1;
+  padding: 0 18.23vw;
   display: flex;
-  justify-content: flex-start;
   align-items: center;
-  background-color: var(--color4);
-  border-top: 1px solid var(--color6);
+  gap: 1vw;
   margin-top: auto;
 }
 
 .links {
   display: flex;
-  gap: 1.5vw;
+  gap: 1vw;
   align-items: center;
 }
 
 .link {
-  font-size: clamp(12px, 0.83vw + 2px, 18px);
+  font-size: calc(0.83vw + 2px);
   color: var(--color1);
   text-decoration: underline;
-  text-underline-offset: 3px;
-  font-weight: 400;
-  transition: color 0.3s;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  font-weight: 600;
+  width: fit-content;
+  display: block;
+  padding-bottom: 1vw;
 }
 
 .link:hover {
@@ -29,11 +32,16 @@
 
 @media (max-width: 768px) {
   .footer {
-    padding: 16px 24px;
+    padding: 0 24px;
     justify-content: center;
   }
 
   .links {
-    gap: 24px;
+    gap: 16px;
+  }
+
+  .link {
+    font-size: 14px;
+    padding-bottom: 16px;
   }
 }

@@ -96,7 +96,7 @@
 
 .workshopTxtContainer {
   width: 29.43vw;
-  margin-right: calc(31.15vw + 2vw);
+  margin-left: calc(31.15vw + 2vw);
 }
 
 .workshopTxtContainer h1 {

@@ -41,16 +41,16 @@
 }
 
 .typeBtnOn {
-  background-color: var(--color1);
-  color: var(--color2);
+  background-color: var(--color6);
+  color: var(--color1);
 }
 
 .typeBtnOn:hover {
-  background-color: var(--color1);
+  background-color: var(--color6);
 }
 
 .typeBtnOn img {
-  filter: brightness(0) invert(1);
+  filter: none;
 }
 
 .typeIcon {
@@ -146,16 +146,19 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.26vw;
-  padding: 0.78vw 2.08vw;
+  gap: 0.52vw;
+  width: 20.05vw;
+  min-width: 200px;
+  height: 3.39vw;
+  min-height: 44px;
   background-color: var(--color1);
   color: var(--color2);
   border: none;
   border-radius: 5.21vw;
-  font-size: calc(0.83vw + 2px);
+  font-size: calc(1.15vw + 3px);
   font-weight: 700;
   cursor: pointer;
-  margin-top: 1.04vw;
+  margin-top: 2.08vw;
   transition: background-color 0.2s;
 }
 

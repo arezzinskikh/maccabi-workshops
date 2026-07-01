@@ -1,4 +1,29 @@
-@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&display=swap');
+@font-face {
+  font-family: 'PloniMaccabiMLv2AAA-Regular';
+  src: url('/fonts/PloniMaccabiMLv2AAA-Regular.woff2') format('woff2'),
+       url('/fonts/PloniMaccabiMLv2AAA-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PloniMaccabiMLv2AAA-Regular';
+  src: url('/fonts/PloniMaccabiMLv2AAA-Bold.woff2') format('woff2'),
+       url('/fonts/PloniMaccabiMLv2AAA-Bold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PloniMaccabiMLv2AAA-Regular';
+  src: url('/fonts/PloniMaccabiMLv2AAA-DemiBold.woff2') format('woff2'),
+       url('/fonts/PloniMaccabiMLv2AAA-DemiBold.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   --color1: #1E3C95;
@@ -18,9 +43,11 @@
   box-sizing: border-box;
   text-decoration: none;
   direction: rtl;
-  font-family: 'Heebo', 'PloniMaccabiMLv2AAA-Regular', sans-serif;
+  font-family: 'PloniMaccabiMLv2AAA-Regular', sans-serif;
   -webkit-tap-highlight-color: transparent;
+  outline: none;
   scroll-behavior: smooth;
+  transition: 0.6s all;
 }
 
 html {
@@ -28,7 +55,6 @@ html {
 }
 
 body {
-  background-color: var(--color4);
   color: var(--color1);
   min-height: 100vh;
 }
