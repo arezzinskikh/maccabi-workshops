@@ -1,0 +1,68 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color2);
+}
+
+.card {
+  width: min(420px, 90vw);
+  background: #fff;
+  border-radius: 16px;
+  padding: 40px 32px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.title {
+  color: var(--color1);
+  font-size: 28px;
+  margin: 0;
+  text-align: center;
+}
+
+.subtitle {
+  color: #555;
+  margin: 0;
+  text-align: center;
+  font-size: 15px;
+}
+
+.input {
+  border: 1px solid #d0d0d8;
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 16px;
+  background: #fafafc;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--color1);
+}
+
+.error {
+  margin: 0;
+  color: #c0392b;
+  font-size: 14px;
+  text-align: center;
+}
+
+.submit {
+  background: var(--color1);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.submit[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

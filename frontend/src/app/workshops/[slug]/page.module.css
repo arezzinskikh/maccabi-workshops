@@ -139,6 +139,30 @@
   margin: 1.04vw 0;
 }
 
+.extraBlocks {
+  display: flex;
+  flex-direction: column;
+  gap: 1.04vw;
+  margin: 1.04vw 0 0;
+}
+
+.extraBlock {
+  color: var(--color1);
+}
+
+.extraHeading {
+  font-weight: 700;
+  font-size: calc(1vw + 4px);
+  margin: 0 0 .26vw;
+}
+
+.extraBody {
+  font-size: calc(.83vw + 2px);
+  line-height: 1.5;
+  white-space: pre-wrap;
+  margin: 0;
+}
+
 .notFound {
   padding: 4vw 18.23vw;
   color: var(--color1);

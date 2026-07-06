@@ -1,4 +1,8 @@
+// Server-side fetches run inside the frontend container and must reach Strapi
+// over the docker network (service DNS `cms`), while image URLs are rendered
+// in the browser and must use the host-reachable URL.
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://localhost:1337';
+const STRAPI_SERVER_URL = process.env.STRAPI_INTERNAL_URL || STRAPI_URL;
 const API_TOKEN = process.env.STRAPI_API_TOKEN || '';
 
 export interface WorkshopDate {
@@ -22,6 +26,18 @@ export interface Category {
   updatedAt: string;
 }
 
+export interface Instructor {
+  id: number;
+  name: string;
+  bio: string | null;
+  photo: {
+    url: string;
+    alternativeText: string | null;
+    width: number;
+    height: number;
+  } | null;
+}
+
 export interface Workshop {
   id: number;
   documentId: string;
@@ -33,6 +49,10 @@ export interface Workshop {
   hours: number | null;
   age_range: string | null;
   cost: string | null;
+  long_description: string | null;
+  prerequisites: string | null;
+  what_youll_learn: string | null;
+  target_audience: string | null;
   image: {
     url: string;
     alternativeText: string | null;
@@ -73,11 +93,58 @@ function flattenCategory(item: any): Category {
   };
 }
 
+function flattenInstructor(item: any): Instructor | null {
+  if (!item) return null;
+  const a = item?.attributes ?? item ?? {};
+  const photoData = a.photo?.data ?? a.photo;
+  const photo = photoData?.attributes ?? photoData;
+  return {
+    id: item.id,
+    name: a.name,
+    bio: a.bio ?? null,
+    photo: photo?.url
+      ? {
+          url: photo.url,
+          alternativeText: photo.alternativeText ?? null,
+          width: photo.width,
+          height: photo.height,
+        }
+      : null,
+  };
+}
+
+function flattenSessions(rawSessions: any): WorkshopDate[] | undefined {
+  if (!Array.isArray(rawSessions) || rawSessions.length === 0) return undefined;
+  return rawSessions.map((s, idx): WorkshopDate => {
+    const instRaw = s?.instructor?.data ?? s?.instructor;
+    const inst = flattenInstructor(instRaw);
+    // Prefer the day_name editors typed; fall back to a Hebrew day derived
+    // from the date so cards still render if the field is left blank.
+    const hebrewDays = ["יום א'", "יום ב'", "יום ג'", "יום ד'", "יום ה'", "יום ו'", 'שבת'];
+    const derivedDay = s?.date ? hebrewDays[new Date(s.date).getDay()] : '';
+    const dayName = s?.day_name || derivedDay;
+    const displayDate = s?.date
+      ? new Date(s.date).toLocaleDateString('he-IL', { day: '2-digit', month: '2-digit', year: 'numeric' })
+      : '';
+    const trim = (t: string | undefined | null) => (t ?? '').slice(0, 5); // "HH:MM:SS.sss" → "HH:MM"
+    return {
+      id: String(s?.id ?? `session-${idx}`),
+      dayName,
+      date: displayDate,
+      timeStart: trim(s?.time_start),
+      timeEnd: trim(s?.time_end),
+      instructor: inst?.name ?? '',
+      type: (s?.type === 'inperson' ? 'inperson' : 'online'),
+    };
+  });
+}
+
 function flattenWorkshop(item: any): Workshop {
   const a = item?.attributes ?? item ?? {};
   const imgData = a.image?.data ?? a.image;
   const img = imgData?.attributes ?? imgData;
   const catData = a.category?.data ?? a.category;
+  const sessions = flattenSessions(a.sessions);
   return {
     id: item.id,
     documentId: item.documentId ?? String(item.id),
@@ -100,14 +167,19 @@ function flattenWorkshop(item: any): Workshop {
     hours: a.hours ?? null,
     age_range: a.age_range ?? null,
     cost: a.cost ?? null,
+    long_description: a.long_description ?? null,
+    prerequisites: a.prerequisites ?? null,
+    what_youll_learn: a.what_youll_learn ?? null,
+    target_audience: a.target_audience ?? null,
     category: catData ? flattenCategory(catData) : null,
     createdAt: a.createdAt,
     updatedAt: a.updatedAt,
+    dates: sessions,
   };
 }
 
 async function fetchStrapi<T>(path: string, params?: Record<string, string>): Promise<T> {
-  const url = new URL(`/api${path}`, STRAPI_URL);
+  const url = new URL(`/api${path}`, STRAPI_SERVER_URL);
   if (params) {
     Object.entries(params).forEach(([key, value]) => url.searchParams.set(key, value));
   }
@@ -142,7 +214,8 @@ export async function getCategoryBySlug(slug: string): Promise<Category | null> 
 export async function getWorkshopsByCategory(categorySlug: string): Promise<Workshop[]> {
   const res = await fetchStrapi<StrapiResponse<Workshop[]>>('/workshops', {
     'filters[category][slug][$eq]': categorySlug,
-    'populate': 'image,category',
+    'populate[image]': 'true',
+    'populate[category]': 'true',
     'sort': 'sort_order:asc',
     'pagination[pageSize]': '50',
   });
@@ -179,6 +252,10 @@ const makeWorkshop = (
   hours: hours ?? null,
   age_range: age_range ?? null,
   cost: cost ?? null,
+  long_description: null,
+  prerequisites: null,
+  what_youll_learn: null,
+  target_audience: null,
   image: imageUrl ? { url: imageUrl, alternativeText: title, width: 400, height: 200 } : null,
   category: null,
   createdAt: '',
@@ -256,11 +333,16 @@ export function getWorkshopBySlug(slug: string): Workshop | undefined {
 
 export async function getWorkshopBySlugFromStrapi(slug: string): Promise<Workshop | null> {
   try {
+    // Legacy CMS rows have slug=null, so filter[slug][$eq] misses them. Fetch
+    // all and match via flattenWorkshop, which derives the slug from
+    // registration_link when the CMS field is empty.
     const res = await fetchStrapi<StrapiResponse<Workshop[]>>('/workshops', {
-      'filters[slug][$eq]': slug,
-      'populate': 'image,category',
+      'populate[image]': 'true',
+      'populate[category]': 'true',
+      'populate[sessions][populate][instructor][populate][photo]': 'true',
+      'pagination[pageSize]': '100',
     });
-    return res.data[0] ? flattenWorkshop(res.data[0]) : null;
+    return res.data.map(flattenWorkshop).find((w) => w.slug === slug) ?? null;
   } catch {
     return null;
   }

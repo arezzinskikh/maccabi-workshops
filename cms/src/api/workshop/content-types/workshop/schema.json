@@ -55,6 +55,27 @@
       "required": false,
       "maxLength": 200
     },
+    "long_description": {
+      "type": "text",
+      "required": false
+    },
+    "prerequisites": {
+      "type": "text",
+      "required": false
+    },
+    "what_youll_learn": {
+      "type": "text",
+      "required": false
+    },
+    "target_audience": {
+      "type": "text",
+      "required": false
+    },
+    "sessions": {
+      "type": "component",
+      "repeatable": true,
+      "component": "workshop.session"
+    },
     "category": {
       "type": "relation",
       "relation": "manyToOne",

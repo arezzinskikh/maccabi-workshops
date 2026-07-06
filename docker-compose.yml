@@ -58,7 +58,10 @@ services:
       - cms
     environment:
       NEXT_PUBLIC_STRAPI_URL: ${NEXT_PUBLIC_STRAPI_URL:-http://localhost:1337}
+      STRAPI_INTERNAL_URL: ${STRAPI_INTERNAL_URL:-http://cms:1337}
       STRAPI_API_TOKEN: ${STRAPI_API_TOKEN:-}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-changeme-admin-pass}
+      ADMIN_COOKIE_SECRET: ${ADMIN_COOKIE_SECRET:-changeme-admin-cookie-secret-32chars}
     ports:
       - "3000:3000"
 

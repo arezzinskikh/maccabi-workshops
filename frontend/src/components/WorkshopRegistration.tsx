@@ -16,6 +16,8 @@ export default function WorkshopRegistration({ workshop }: { workshop: Workshop 
   const [email, setEmail] = useState('');
   const [consent, setConsent] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const allDates = workshop.dates ?? [];
   const filtered = allDates.filter(d => d.type === activeType);
@@ -32,9 +34,38 @@ export default function WorkshopRegistration({ workshop }: { workshop: Workshop 
     setName(''); setPhone(''); setEmail(''); setConsent(false);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    if (submitting) return;
+    setSubmitting(true);
+    setSubmitError(null);
+    try {
+      const res = await fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          full_name: name,
+          phone,
+          email,
+          consent,
+          workshop_id: workshop.id,
+          session_date: selectedDate?.date,
+          session_time: selectedDate ? `${selectedDate.timeStart} - ${selectedDate.timeEnd}` : undefined,
+          session_type: selectedDate?.type,
+          session_instructor: selectedDate?.instructor,
+        }),
+      });
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        setSubmitError(body?.error ? `שגיאה: ${body.error}` : 'לא הצלחנו לשלוח את הבקשה, נסו שוב.');
+        return;
+      }
+      setSubmitted(true);
+    } catch {
+      setSubmitError('לא הצלחנו לשלוח את הבקשה, נסו שוב.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -123,8 +154,9 @@ export default function WorkshopRegistration({ workshop }: { workshop: Workshop 
                     <input type="checkbox" checked={consent} onChange={e => setConsent(e.target.checked)} required />
                     <span>אני מסכים/ה לקבל הרשמה מלאה שאלון באימייל/סמס</span>
                   </label>
-                  <button type="submit" className={styles.submitBtn}>
-                    <span>שליחה ›</span>
+                  {submitError && <p className={styles.submitError}>{submitError}</p>}
+                  <button type="submit" className={styles.submitBtn} disabled={submitting}>
+                    <span>{submitting ? 'שולח…' : 'שליחה ›'}</span>
                   </button>
                 </form>
               </>

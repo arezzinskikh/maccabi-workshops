@@ -1,0 +1,64 @@
+{
+  "kind": "collectionType",
+  "collectionName": "registrations",
+  "info": {
+    "singularName": "registration",
+    "pluralName": "registrations",
+    "displayName": "Registration",
+    "description": "A submitted workshop registration"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "full_name": {
+      "type": "string",
+      "required": true,
+      "maxLength": 200
+    },
+    "phone": {
+      "type": "string",
+      "required": true,
+      "maxLength": 30
+    },
+    "email": {
+      "type": "email",
+      "required": true
+    },
+    "consent": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "workshop": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::workshop.workshop"
+    },
+    "session_date": {
+      "type": "string",
+      "required": false,
+      "maxLength": 40
+    },
+    "session_time": {
+      "type": "string",
+      "required": false,
+      "maxLength": 40
+    },
+    "session_type": {
+      "type": "enumeration",
+      "enum": ["online", "inperson"],
+      "required": false
+    },
+    "session_instructor": {
+      "type": "string",
+      "required": false,
+      "maxLength": 200
+    },
+    "notes": {
+      "type": "text",
+      "required": false
+    }
+  }
+}

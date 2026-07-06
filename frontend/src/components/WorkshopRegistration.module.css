@@ -287,6 +287,17 @@
   cursor: pointer;
 }
 
+.submitError {
+  color: #c0392b;
+  font-size: calc(0.83vw + 2px);
+  margin: 0 0 0.5rem;
+}
+
+.submitBtn[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 /* Submit button */
 .submitBtn {
   display: inline-flex;

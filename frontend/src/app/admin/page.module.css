@@ -1,0 +1,198 @@
+.shell {
+  min-height: 100vh;
+  background: #f5f6fa;
+  color: #1c1d3f;
+  padding: 32px clamp(16px, 4vw, 40px);
+  font-family: inherit;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.title {
+  margin: 0;
+  font-size: 26px;
+  color: var(--color1);
+}
+
+.subtitle {
+  margin: 4px 0 0;
+  color: #6a6c8a;
+  font-size: 14px;
+}
+
+.logout {
+  background: transparent;
+  color: var(--color1);
+  border: 1px solid var(--color1);
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.logout:hover {
+  background: var(--color1);
+  color: #fff;
+}
+
+.kpiGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.kpiCard {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.kpiLabel {
+  margin: 0;
+  color: #6a6c8a;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.kpiValue {
+  margin: 8px 0 0;
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--color1);
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 900px) {
+  .grid2 { grid-template-columns: 1fr; }
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.cardTitle {
+  margin: 0 0 12px;
+  font-size: 16px;
+  color: var(--color1);
+}
+
+.empty {
+  color: #9092b0;
+  font-size: 14px;
+  margin: 8px 0;
+}
+
+.topList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.topRow {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  padding: 10px 12px;
+  background: #f8f9fd;
+  border-radius: 8px;
+  align-items: center;
+}
+
+.topTitle {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.topSub {
+  font-size: 12px;
+  color: #6a6c8a;
+  margin-top: 2px;
+}
+
+.topCount {
+  background: var(--color1);
+  color: #fff;
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.table th {
+  text-align: right;
+  padding: 8px 10px;
+  border-bottom: 2px solid #e5e6f0;
+  color: #6a6c8a;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.table td {
+  padding: 10px;
+  border-bottom: 1px solid #eef0f7;
+  vertical-align: top;
+}
+
+.badgeOnline,
+.badgeInperson {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.badgeOnline { background: #dbe8ff; color: #1e4b9c; }
+.badgeInperson { background: #ffe1d1; color: #b04a1b; }
+
+.chart {
+  width: 100%;
+  height: 220px;
+  display: block;
+}
+
+.chartAxis {
+  fill: #6a6c8a;
+  font-size: 11px;
+}
+
+.chartBar {
+  fill: var(--color1);
+}
+
+.chartBar:hover {
+  fill: var(--color5, #b3567b);
+}

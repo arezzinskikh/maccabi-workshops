@@ -1,0 +1,38 @@
+{
+  "collectionName": "components_workshop_sessions",
+  "info": {
+    "displayName": "Session",
+    "description": "One scheduled workshop session (date, time, instructor, delivery type)"
+  },
+  "options": {},
+  "attributes": {
+    "day_name": {
+      "type": "string",
+      "maxLength": 30,
+      "required": false
+    },
+    "date": {
+      "type": "date",
+      "required": true
+    },
+    "time_start": {
+      "type": "time",
+      "required": true
+    },
+    "time_end": {
+      "type": "time",
+      "required": true
+    },
+    "instructor": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::instructor.instructor"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": ["online", "inperson"],
+      "default": "online",
+      "required": true
+    }
+  }
+}

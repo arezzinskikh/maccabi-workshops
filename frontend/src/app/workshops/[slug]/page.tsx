@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import WorkshopRegistration from '@/components/WorkshopRegistration';
-import { FALLBACK_WORKSHOPS, getWorkshopBySlug, getWorkshopBySlugFromStrapi, type Category } from '@/lib/api';
+import { FALLBACK_WORKSHOPS, getStrapiImageUrl, getWorkshopBySlug, getWorkshopBySlugFromStrapi, type Category } from '@/lib/api';
 import styles from './page.module.css';
 
 interface Props {
@@ -48,7 +48,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function WorkshopPage({ params }: Props) {
   const slug = decodeURIComponent(params.slug);
   const strapiWorkshop = await getWorkshopBySlugFromStrapi(slug);
-  const workshop = strapiWorkshop ?? getWorkshopBySlug(slug);
+  const fallbackWorkshop = getWorkshopBySlug(slug);
+  // Prefer CMS-defined sessions; fall back to hardcoded dates only if the CMS
+  // record has none, so a workshop with no configured sessions still renders
+  // the sample schedule instead of an empty widget.
+  const workshop = strapiWorkshop
+    ? { ...strapiWorkshop, dates: strapiWorkshop.dates?.length ? strapiWorkshop.dates : fallbackWorkshop?.dates ?? [] }
+    : fallbackWorkshop;
   const category = strapiWorkshop?.category ?? getCategoryForWorkshop(slug);
 
   if (!workshop) {
@@ -63,7 +69,7 @@ export default async function WorkshopPage({ params }: Props) {
     );
   }
 
-  const imageUrl = workshop.image?.url || '/images/workshop-placeholder.svg';
+  const imageUrl = workshop.image?.url ? getStrapiImageUrl(workshop.image.url) : '/images/workshop-placeholder.svg';
 
   return (
     <div className={styles.page}>
@@ -135,6 +141,34 @@ export default async function WorkshopPage({ params }: Props) {
               </div>
             </div>
           </div>
+
+          {(workshop.long_description || workshop.what_youll_learn || workshop.target_audience || workshop.prerequisites) && (
+            <div className={styles.extraBlocks}>
+              {workshop.long_description && (
+                <div className={styles.extraBlock}>
+                  <p className={styles.extraBody}>{workshop.long_description}</p>
+                </div>
+              )}
+              {workshop.what_youll_learn && (
+                <div className={styles.extraBlock}>
+                  <h2 className={styles.extraHeading}>מה תלמדו בסדנה</h2>
+                  <p className={styles.extraBody}>{workshop.what_youll_learn}</p>
+                </div>
+              )}
+              {workshop.target_audience && (
+                <div className={styles.extraBlock}>
+                  <h2 className={styles.extraHeading}>למי הסדנה מיועדת</h2>
+                  <p className={styles.extraBody}>{workshop.target_audience}</p>
+                </div>
+              )}
+              {workshop.prerequisites && (
+                <div className={styles.extraBlock}>
+                  <h2 className={styles.extraHeading}>דרישות מקדימות</h2>
+                  <p className={styles.extraBody}>{workshop.prerequisites}</p>
+                </div>
+              )}
+            </div>
+          )}
 
           <div className={styles.hrWorkshop} />
 
