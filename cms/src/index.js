@@ -29,6 +29,6 @@ async function ensurePublicRead(strapi, uids) {
 module.exports = {
   register({ strapi }) {},
   async bootstrap({ strapi }) {
-    await ensurePublicRead(strapi, ['api::instructor.instructor']);
+    await ensurePublicRead(strapi, ['api::instructor.instructor', 'api::city.city']);
   },
 };

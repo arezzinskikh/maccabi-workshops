@@ -15,6 +15,7 @@ interface RegistrationBody {
   session_time?: string;
   session_type?: 'online' | 'inperson';
   session_instructor?: string;
+  session_city?: string;
   notes?: string;
 }
 
@@ -53,6 +54,7 @@ export async function POST(req: NextRequest) {
     session_date: str(body.session_date, 40),
     session_time: str(body.session_time, 40),
     session_instructor: str(body.session_instructor, 200),
+    session_city: str(body.session_city, 100),
     notes: str(body.notes, 2000),
   };
   if (body.session_type === 'online' || body.session_type === 'inperson') {

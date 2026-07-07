@@ -28,6 +28,11 @@
       "relation": "oneToOne",
       "target": "api::instructor.instructor"
     },
+    "city": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::city.city"
+    },
     "type": {
       "type": "enumeration",
       "enum": ["online", "inperson"],

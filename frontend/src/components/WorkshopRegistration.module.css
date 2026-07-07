@@ -287,6 +287,166 @@
   cursor: pointer;
 }
 
+/* Wizard steps for in-person */
+.steps {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  list-style: none;
+  padding: 0;
+  margin: 1.5vw 0 0.5vw;
+  direction: rtl;
+}
+
+.stepItem {
+  display: inline-flex;
+}
+
+.stepBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: var(--color1);
+  font-size: calc(1vw + 2px);
+  font-weight: 700;
+  opacity: 0.55;
+}
+
+.stepBtn[disabled] { cursor: not-allowed; }
+.stepBtn:not([disabled]):hover { opacity: 0.9; }
+
+.stepItemActive .stepBtn { opacity: 1; }
+.stepItemDone .stepBtn { opacity: 0.85; }
+
+.stepNum {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.stepItemActive .stepNum {
+  background: var(--color1);
+  color: #fff;
+  border-color: var(--color1);
+}
+
+.stepLabel {
+  line-height: 1;
+}
+
+.stepSep {
+  flex: 0 0 40px;
+  height: 1px;
+  background: var(--color1);
+  opacity: 0.35;
+}
+
+/* City selection step */
+.cityStep {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 0.5vw;
+  direction: rtl;
+}
+
+.cityHint {
+  margin: 0;
+  color: var(--color1);
+  font-size: 13px;
+  opacity: 0.75;
+}
+
+.citySelect {
+  position: relative;
+  max-width: 420px;
+  width: 100%;
+}
+
+.cityTrigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border: 1px solid var(--color1);
+  border-radius: 32px;
+  background: #fff;
+  color: var(--color1);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: right;
+}
+
+.cityTriggerPlaceholder { opacity: 0.55; }
+
+.cityChevron {
+  margin-inline-start: 8px;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.cityList {
+  position: absolute;
+  z-index: 10;
+  top: calc(100% + 6px);
+  right: 0;
+  left: 0;
+  max-height: 260px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid var(--color1);
+  border-radius: 16px;
+  list-style: none;
+  padding: 6px 0;
+  margin: 0;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.cityListItem label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  color: var(--color1);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.cityListItem label:hover {
+  background: var(--color6);
+}
+
+.cityListItem input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color1);
+}
+
+/* City chip on date cards */
+.dateCity {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--color6);
+  color: var(--color1);
+  font-size: 12px;
+  font-weight: 600;
+  align-self: flex-start;
+}
+
 .submitError {
   color: #c0392b;
   font-size: calc(0.83vw + 2px);

@@ -13,6 +13,7 @@ export interface RegistrationRow {
   session_time: string | null;
   session_type: 'online' | 'inperson' | null;
   session_instructor: string | null;
+  session_city: string | null;
   notes: string | null;
   createdAt: string;
   workshop: { id: number; title: string; category: string | null } | null;
@@ -53,6 +54,7 @@ function flattenRegistration(item: any): RegistrationRow {
     session_time: a.session_time ?? null,
     session_type: a.session_type ?? null,
     session_instructor: a.session_instructor ?? null,
+    session_city: a.session_city ?? null,
     notes: a.notes ?? null,
     createdAt: a.createdAt ?? '',
     workshop: wsRaw

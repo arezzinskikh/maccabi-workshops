@@ -56,6 +56,11 @@
       "required": false,
       "maxLength": 200
     },
+    "session_city": {
+      "type": "string",
+      "required": false,
+      "maxLength": 100
+    },
     "notes": {
       "type": "text",
       "required": false

@@ -13,6 +13,7 @@ export interface WorkshopDate {
   timeEnd: string;
   instructor: string;
   type: 'online' | 'inperson';
+  city: string | null;
 }
 
 export interface Category {
@@ -118,6 +119,9 @@ function flattenSessions(rawSessions: any): WorkshopDate[] | undefined {
   return rawSessions.map((s, idx): WorkshopDate => {
     const instRaw = s?.instructor?.data ?? s?.instructor;
     const inst = flattenInstructor(instRaw);
+    const cityRaw = s?.city?.data ?? s?.city;
+    const cityAttrs = cityRaw?.attributes ?? cityRaw;
+    const cityName: string | null = cityAttrs?.name ?? null;
     // Prefer the day_name editors typed; fall back to a Hebrew day derived
     // from the date so cards still render if the field is left blank.
     const hebrewDays = ["יום א'", "יום ב'", "יום ג'", "יום ד'", "יום ה'", "יום ו'", 'שבת'];
@@ -135,6 +139,7 @@ function flattenSessions(rawSessions: any): WorkshopDate[] | undefined {
       timeEnd: trim(s?.time_end),
       instructor: inst?.name ?? '',
       type: (s?.type === 'inperson' ? 'inperson' : 'online'),
+      city: cityName,
     };
   });
 }
@@ -271,7 +276,8 @@ const mkDate = (
   te: string,
   instructor: string,
   type: 'online' | 'inperson',
-): WorkshopDate => ({ id, dayName: day, date, timeStart: ts, timeEnd: te, instructor, type });
+  city: string | null = null,
+): WorkshopDate => ({ id, dayName: day, date, timeStart: ts, timeEnd: te, instructor, type, city });
 
 const onlineDates = (prefix: string, inst: [string, string]): WorkshopDate[] => [
   mkDate(`${prefix}-o1`, "יום א'", '12/07/2026', '19:00', '20:30', inst[0], 'online'),
@@ -281,10 +287,10 @@ const onlineDates = (prefix: string, inst: [string, string]): WorkshopDate[] => 
 ];
 
 const inpersonDates = (prefix: string, inst: [string, string]): WorkshopDate[] => [
-  mkDate(`${prefix}-p1`, "יום ב'", '13/07/2026', '17:00', '18:30', inst[0], 'inperson'),
-  mkDate(`${prefix}-p2`, "יום ה'", '23/07/2026', '17:30', '19:00', inst[1], 'inperson'),
-  mkDate(`${prefix}-p3`, "יום ב'", '10/08/2026', '17:00', '18:30', inst[0], 'inperson'),
-  mkDate(`${prefix}-p4`, "יום ה'", '20/08/2026', '17:30', '19:00', inst[1], 'inperson'),
+  mkDate(`${prefix}-p1`, "יום ב'", '13/07/2026', '17:00', '18:30', inst[0], 'inperson', 'תל אביב'),
+  mkDate(`${prefix}-p2`, "יום ה'", '23/07/2026', '17:30', '19:00', inst[1], 'inperson', 'ירושלים'),
+  mkDate(`${prefix}-p3`, "יום ב'", '10/08/2026', '17:00', '18:30', inst[0], 'inperson', 'חיפה'),
+  mkDate(`${prefix}-p4`, "יום ה'", '20/08/2026', '17:30', '19:00', inst[1], 'inperson', 'תל אביב'),
 ];
 
 const wdates = (
@@ -340,6 +346,7 @@ export async function getWorkshopBySlugFromStrapi(slug: string): Promise<Worksho
       'populate[image]': 'true',
       'populate[category]': 'true',
       'populate[sessions][populate][instructor][populate][photo]': 'true',
+      'populate[sessions][populate][city]': 'true',
       'pagination[pageSize]': '100',
     });
     return res.data.map(flattenWorkshop).find((w) => w.slug === slug) ?? null;

@@ -91,6 +91,7 @@ export default async function AdminDashboardPage() {
                   <th>סדנה</th>
                   <th>מועד</th>
                   <th>סוג</th>
+                  <th>עיר</th>
                   <th>נשלח</th>
                 </tr>
               </thead>
@@ -107,6 +108,7 @@ export default async function AdminDashboardPage() {
                       {r.session_type === 'inperson' && <span className={styles.badgeInperson}>פרונטאלית</span>}
                       {!r.session_type && '—'}
                     </td>
+                    <td>{r.session_city ?? '—'}</td>
                     <td>{formatDateTime(r.createdAt)}</td>
                   </tr>
                 ))}
