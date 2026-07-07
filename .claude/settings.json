@@ -7,7 +7,29 @@
       "Bash(curl -s http://localhost:3000/_next/static/css/d1519470c54ea796.css)",
       "Bash(curl -s http://localhost:3000/_next/static/css/98b74f920c31eb36.css)",
       "Bash(cat /tmp/a.css /tmp/b.css)",
-      "Read(//private/tmp/**)"
+      "Read(//private/tmp/**)",
+      "Bash(/Applications/Docker.app/Contents/Resources/bin/docker exec *)",
+      "Bash(curl -s -X POST http://localhost:1337/api/external-sources -H 'Authorization: Bearer __TRACKED_VAR__' -H 'Content-Type: application/json' -d '{ *)",
+      "Bash(python3 -c 'import sys,json; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d, ensure_ascii=False, indent=2\\)[:600]\\)')",
+      "Bash(curl -s -X POST http://localhost:1337/api/external-sources/2/sync -H 'Authorization: Bearer __TRACKED_VAR__' -w '\\\\n\\(HTTP %{http_code}\\)\\\\n')",
+      "Bash(python3 -c 'import sys, json; body = sys.stdin.read\\(\\); print\\(body[:800]\\)')",
+      "Bash(curl -s 'http://localhost:1337/api/workshops?filters%5Bsource_slug%5D%5B%24eq%5D=jsonplaceholder-test&pagination%5BpageSize%5D=10' -H 'Authorization: Bearer __TRACKED_VAR__')",
+      "Bash(python3 -c ' *)",
+      "Bash(python3)",
+      "Bash(curl -s -X POST http://localhost:1337/api/external-sources/2/sync -H 'Authorization: Bearer __TRACKED_VAR__')",
+      "Bash(curl -s http://localhost:1337/api/external-sources/2 -H 'Authorization: Bearer __TRACKED_VAR__')",
+      "Bash(python3 -c 'import sys,json; print\\(\"total imported rows:\", json.load\\(sys.stdin\\)[\"meta\"][\"pagination\"][\"total\"]\\)')",
+      "Bash(rm -f /tmp/admin.cookie)",
+      "Bash(curl -s -c /tmp/admin.cookie -X POST 'http://localhost:3000/api/admin/login' -H 'Content-Type: application/json' -d '{\"password\":\"changeme-admin-pass\"}')",
+      "Bash(curl -s -b /tmp/admin.cookie 'http://localhost:3000/admin')",
+      "Bash(curl -s -b /tmp/admin.cookie -X POST 'http://localhost:3000/api/admin/sync-external' -H 'Content-Type: application/json' -d '{\"source_id\":2}' -w '\\\\n\\(HTTP %{http_code}\\)\\\\n')",
+      "Bash(curl -s -X POST 'http://localhost:3000/api/admin/sync-external' -H 'Content-Type: application/json' -d '{\"source_id\":2}' -w '\\\\n\\(HTTP %{http_code}\\)\\\\n')",
+      "Bash(curl -s -b /tmp/admin.cookie -X POST 'http://localhost:3000/api/admin/sync-external' -H 'Content-Type: application/json' -d '{\"source_id\":\"nope\"}' -w '\\\\n\\(HTTP %{http_code}\\)\\\\n')",
+      "Bash(curl -s -o /dev/null 'http://localhost:1337/api/sync-logs' -w '%{http_code}')",
+      "Bash(TOKEN=$\\(/Applications/Docker.app/Contents/Resources/bin/docker exec maccabi_frontend printenv STRAPI_API_TOKEN\\); \\\\ *)"
+    ],
+    "additionalDirectories": [
+      "/tmp"
     ]
   }
 }

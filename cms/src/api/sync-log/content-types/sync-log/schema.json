@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "sync_logs",
+  "info": {
+    "singularName": "sync-log",
+    "pluralName": "sync-logs",
+    "displayName": "Sync Log",
+    "description": "One row per external-source sync run, including per-item errors"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "source": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::external-source.external-source"
+    },
+    "source_name": {
+      "type": "string",
+      "required": true,
+      "maxLength": 200
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": ["ok", "partial", "error"],
+      "required": true
+    },
+    "created_count": { "type": "integer", "default": 0 },
+    "updated_count": { "type": "integer", "default": 0 },
+    "skipped_count": { "type": "integer", "default": 0 },
+    "error_count": { "type": "integer", "default": 0 },
+    "errors": { "type": "json" },
+    "started_at": { "type": "datetime", "required": true },
+    "finished_at": { "type": "datetime", "required": true },
+    "duration_ms": { "type": "integer", "default": 0 },
+    "fatal_error": { "type": "text", "required": false }
+  }
+}

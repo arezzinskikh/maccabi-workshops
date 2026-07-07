@@ -1,0 +1,80 @@
+{
+  "kind": "collectionType",
+  "collectionName": "external_sources",
+  "info": {
+    "singularName": "external-source",
+    "pluralName": "external-sources",
+    "displayName": "External Source",
+    "description": "Configured external API that provides workshops to this CMS"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "maxLength": 150
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true,
+      "maxLength": 100
+    },
+    "url": {
+      "type": "string",
+      "required": true,
+      "maxLength": 500
+    },
+    "auth_type": {
+      "type": "enumeration",
+      "enum": ["none", "bearer", "api_key", "basic"],
+      "default": "none",
+      "required": true
+    },
+    "auth_token": {
+      "type": "text",
+      "required": false,
+      "private": true
+    },
+    "auth_header_name": {
+      "type": "string",
+      "required": false,
+      "maxLength": 100,
+      "default": "Authorization"
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "list_path": {
+      "type": "string",
+      "required": false,
+      "maxLength": 200,
+      "default": "data"
+    },
+    "field_map": {
+      "type": "json",
+      "required": true
+    },
+    "default_category": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::category.category"
+    },
+    "last_synced_at": {
+      "type": "datetime",
+      "required": false
+    },
+    "last_sync_status": {
+      "type": "text",
+      "required": false
+    },
+    "last_sync_count": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}

@@ -178,6 +178,129 @@
 .badgeOnline { background: #dbe8ff; color: #1e4b9c; }
 .badgeInperson { background: #ffe1d1; color: #b04a1b; }
 
+.cardSpaced {
+  margin-bottom: 16px;
+}
+
+.urlCell {
+  max-width: 260px;
+  word-break: break-all;
+  font-size: 12px;
+}
+
+.outcome {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.outcomeOk {
+  color: #0f7a3a;
+}
+
+.outcomeErr {
+  color: #c0392b;
+}
+
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.badgeOk { background: #d7f5df; color: #0f7a3a; }
+.badgePartial { background: #fff2cc; color: #96580d; }
+.badgeErr { background: #fbdedb; color: #b3241c; }
+
+.linkBtn {
+  background: transparent;
+  border: none;
+  color: var(--color1);
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 13px;
+  padding: 0;
+}
+
+.detailsCell {
+  background: #fafbfe;
+  padding: 12px 14px;
+}
+
+.detailsHeading {
+  font-size: 12px;
+  font-weight: 700;
+  color: #6a6c8a;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-bottom: 6px;
+}
+
+.pre {
+  margin: 0;
+  padding: 8px 10px;
+  background: #fff;
+  border: 1px solid #eef0f7;
+  border-radius: 6px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: #1c1d3f;
+}
+
+.fatalBox {
+  margin-bottom: 12px;
+}
+
+.errorList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 260px;
+  overflow-y: auto;
+  border: 1px solid #eef0f7;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.errorItem {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 12px;
+  padding: 6px 10px;
+  border-bottom: 1px solid #eef0f7;
+  font-size: 12px;
+  align-items: baseline;
+}
+
+.errorItem:last-child { border-bottom: 0; }
+
+.errorId {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: #6a6c8a;
+  font-size: 11px;
+}
+
+.errorMsg {
+  color: #1c1d3f;
+  word-break: break-word;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .chart {
   width: 100%;
   height: 220px;

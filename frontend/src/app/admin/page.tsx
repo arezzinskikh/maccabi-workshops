@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
-import { buildDashboardData } from '@/lib/admin-api';
+import { buildDashboardData, fetchExternalSources, fetchSyncLogs } from '@/lib/admin-api';
 import DailyChart from './DailyChart';
+import ExternalSources from './ExternalSources';
+import SyncLogs from './SyncLogs';
 import LogoutButton from './LogoutButton';
 import styles from './page.module.css';
 
@@ -14,7 +16,11 @@ function formatDateTime(iso: string): string {
 }
 
 export default async function AdminDashboardPage() {
-  const data = await buildDashboardData();
+  const [data, externalSources, syncLogs] = await Promise.all([
+    buildDashboardData(),
+    fetchExternalSources().catch(() => []),
+    fetchSyncLogs(20).catch(() => []),
+  ]);
   const { kpis, topWorkshops, dailyCounts, registrations } = data;
   const recent = registrations.slice(0, 20);
 
@@ -75,6 +81,16 @@ export default async function AdminDashboardPage() {
           )}
         </section>
       </div>
+
+      <section className={`${styles.card} ${styles.cardSpaced}`}>
+        <h2 className={styles.cardTitle}>מקורות חיצוניים</h2>
+        <ExternalSources sources={externalSources} />
+      </section>
+
+      <section className={`${styles.card} ${styles.cardSpaced}`}>
+        <h2 className={styles.cardTitle}>יומן סנכרונים</h2>
+        <SyncLogs logs={syncLogs} />
+      </section>
 
       <section className={styles.card}>
         <h2 className={styles.cardTitle}>הרשמות אחרונות</h2>

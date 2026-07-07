@@ -76,6 +76,17 @@
       "repeatable": true,
       "component": "workshop.session"
     },
+    "external_id": {
+      "type": "string",
+      "required": false,
+      "maxLength": 200
+    },
+    "source_slug": {
+      "type": "string",
+      "required": false,
+      "maxLength": 100,
+      "default": "cms"
+    },
     "category": {
       "type": "relation",
       "relation": "manyToOne",

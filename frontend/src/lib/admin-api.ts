@@ -38,6 +38,98 @@ async function strapiGet<T>(path: string, params: Record<string, string> = {}): 
   return res.json();
 }
 
+export async function strapiPost<T>(path: string): Promise<{ ok: boolean; status: number; body: T }> {
+  const url = new URL(`/api${path}`, STRAPI_URL);
+  const res = await fetch(url.toString(), {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      ...(TOKEN ? { Authorization: `Bearer ${TOKEN}` } : {}),
+    },
+    cache: 'no-store',
+  });
+  const body = (await res.json().catch(() => ({}))) as T;
+  return { ok: res.ok, status: res.status, body };
+}
+
+export interface ExternalSourceRow {
+  id: number;
+  name: string;
+  slug: string;
+  url: string;
+  enabled: boolean;
+  auth_type: 'none' | 'bearer' | 'api_key' | 'basic';
+  last_synced_at: string | null;
+  last_sync_status: string | null;
+  last_sync_count: number;
+}
+
+export interface SyncLogError {
+  external_id: string | number | null;
+  message: string;
+}
+
+export interface SyncLogRow {
+  id: number;
+  source_name: string;
+  status: 'ok' | 'partial' | 'error';
+  created_count: number;
+  updated_count: number;
+  skipped_count: number;
+  error_count: number;
+  errors: SyncLogError[];
+  started_at: string;
+  finished_at: string;
+  duration_ms: number;
+  fatal_error: string | null;
+}
+
+export async function fetchSyncLogs(limit = 20): Promise<SyncLogRow[]> {
+  const res = await strapiGet<{ data: any[] }>('/sync-logs', {
+    'sort': 'started_at:desc',
+    'pagination[pageSize]': String(limit),
+  });
+  return (res.data ?? []).map((item) => {
+    const a = item?.attributes ?? item ?? {};
+    const rawErrors = Array.isArray(a.errors) ? a.errors : [];
+    return {
+      id: item.id,
+      source_name: a.source_name ?? '',
+      status: (a.status ?? 'ok') as SyncLogRow['status'],
+      created_count: a.created_count ?? 0,
+      updated_count: a.updated_count ?? 0,
+      skipped_count: a.skipped_count ?? 0,
+      error_count: a.error_count ?? 0,
+      errors: rawErrors as SyncLogError[],
+      started_at: a.started_at ?? '',
+      finished_at: a.finished_at ?? '',
+      duration_ms: a.duration_ms ?? 0,
+      fatal_error: a.fatal_error ?? null,
+    };
+  });
+}
+
+export async function fetchExternalSources(): Promise<ExternalSourceRow[]> {
+  const res = await strapiGet<{ data: any[] }>('/external-sources', {
+    'sort': 'name:asc',
+    'pagination[pageSize]': '100',
+  });
+  return (res.data ?? []).map((item) => {
+    const a = item?.attributes ?? item ?? {};
+    return {
+      id: item.id,
+      name: a.name ?? '',
+      slug: a.slug ?? '',
+      url: a.url ?? '',
+      enabled: !!a.enabled,
+      auth_type: a.auth_type ?? 'none',
+      last_synced_at: a.last_synced_at ?? null,
+      last_sync_status: a.last_sync_status ?? null,
+      last_sync_count: a.last_sync_count ?? 0,
+    };
+  });
+}
+
 function flattenRegistration(item: any): RegistrationRow {
   const a = item?.attributes ?? item ?? {};
   const wsRaw = a.workshop?.data ?? a.workshop;
