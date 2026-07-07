@@ -32,7 +32,6 @@
 }
 
 .breadcrumbSep {
-  margin: 0 4px;
   color: var(--color1);
 }
 
@@ -49,7 +48,8 @@
 .backLink {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
+  gap: 0.52vw;
   color: var(--color1);
   font-size: calc(.83vw + 2px);
   font-weight: 400;
@@ -62,7 +62,6 @@
 
 .backArrowImg {
   width: .99vw;
-  min-width: 10px;
   position: relative;
   top: -0.05vw;
 }
@@ -122,21 +121,17 @@
 }
 
 .workshopsList {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: 1.04vw;
+  justify-content: flex-start;
+  align-items: stretch;
 }
 
 .empty {
   color: var(--color9);
-  font-size: clamp(14px, 0.93vw + 2px, 18px);
+  font-size: calc(0.93vw + 2px);
   padding: 40px 0;
-}
-
-@media (min-width: 769px) and (max-width: 1024px) {
-  .workshopsList {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
 @media (max-width: 1024px) {
@@ -144,10 +139,6 @@
   .backRow,
   .section {
     padding-inline: 32px;
-  }
-
-  .categoryTabs {
-    gap: 8px;
   }
 }
 
@@ -182,7 +173,6 @@
   }
 
   .workshopsList {
-    grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 4.65vw;
   }
 }

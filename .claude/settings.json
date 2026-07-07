@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -)",
+      "Bash(curl -s http://localhost:3000/)",
+      "Bash(curl -s http://localhost:3000/category/nutrition)",
+      "Bash(curl -s http://localhost:3000/_next/static/css/d1519470c54ea796.css)",
+      "Bash(curl -s http://localhost:3000/_next/static/css/98b74f920c31eb36.css)",
+      "Bash(cat /tmp/a.css /tmp/b.css)",
+      "Read(//private/tmp/**)"
+    ]
+  }
+}

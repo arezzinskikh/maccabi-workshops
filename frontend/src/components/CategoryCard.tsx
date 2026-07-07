@@ -20,7 +20,7 @@ export default function CategoryCard({ category }: Props) {
       <h3 className={styles.name}>{category.name}</h3>
       <div className={styles.cta}>
         <span>לפירוט הסדנאות</span>
-        <span className={styles.arrow}>›</span>
+        <span className={styles.arrow} aria-hidden="true" />
       </div>
     </Link>
   );

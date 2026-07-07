@@ -14,8 +14,8 @@
 }
 
 .heroSection {
+  position: relative;
   height: 20.19vw;
-  min-height: 200px;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
@@ -23,11 +23,10 @@
 }
 
 .heroImage {
+  position: absolute;
   left: -1.7vw;
   top: 0;
   width: 25.75vw;
-  min-width: 180px;
-  max-width: 380px;
 }
 
 .heroImg {
@@ -43,7 +42,7 @@
 
 .heroTitle {
   color: var(--color5);
-  font-size: clamp(28px, 4.27vw + 3px, 80px);
+  font-size: calc(4.27vw + 3px);
   line-height: 0.95;
   font-weight: 700;
   padding-top: 7.86vw;
@@ -52,7 +51,7 @@
 
 .heroSubtitle {
   color: var(--color1);
-  font-size: clamp(14px, 1.15vw + 3px, 22px);
+  font-size: calc(1.15vw + 3px);
   font-weight: 400;
   line-height: 1.1;
 }
@@ -61,31 +60,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: clamp(8px, 1.04vw, 20px);
-  margin-top: clamp(12px, 1.04vw, 20px);
+  gap: 1.04vw;
+  margin-top: 1.04vw;
   flex-wrap: wrap;
-}
-
-@media (max-width: 1024px) {
-  .container {
-    padding: 24px 32px 48px;
-  }
-
-  .heroSection {
-    height: auto;
-    min-height: auto;
-    flex-direction: column;
-    align-items: flex-end;
-  }
-
-  .heroImage {
-    position: relative;
-    left: auto;
-    top: auto;
-    width: 60%;
-    max-width: 280px;
-    align-self: flex-start;
-  }
 }
 
 @media (max-width: 768px) {
@@ -97,20 +74,34 @@
     flex-direction: column;
     gap: 16px;
     margin-bottom: 24px;
+    height: auto;
   }
 
   .heroImage {
-    width: 70%;
-    max-width: 220px;
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100vw;
+    max-width: none;
   }
 
   .heroTitle {
-    font-size: clamp(28px, 8vw, 44px);
+    font-size: calc(5.12vw + 3px);
     line-height: 1;
+    padding-top: 1.16vw;
+    text-align: center;
+  }
+
+  .heroSubtitle {
+    font-size: calc(3.49vw + 3px);
+    text-align: center;
+    margin-top: 2.33vw;
   }
 
   .categoriesGrid {
     justify-content: center;
-    gap: 12px;
+    gap: 2.33vw;
+    margin-top: 2.33vw;
+    padding: 0 4.65vw;
   }
 }

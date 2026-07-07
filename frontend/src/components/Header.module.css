@@ -19,7 +19,19 @@
 
 .logo {
   width: 7.71vw;
-  min-width: 80px;
-  max-width: 120px;
   height: auto;
+}
+
+@media (max-width: 768px) {
+  .header {
+    height: 18.6vw;
+  }
+
+  .container {
+    padding: 0 4.65vw;
+  }
+
+  .logo {
+    width: 23.49vw;
+  }
 }

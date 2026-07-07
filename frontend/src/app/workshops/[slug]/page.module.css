@@ -51,7 +51,8 @@
 .backLink {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
+  gap: 0.52vw;
   color: var(--color1);
   font-size: calc(.83vw + 2px);
   font-weight: 400;
@@ -64,7 +65,6 @@
 
 .backArrowImg {
   width: .99vw;
-  min-width: 10px;
   position: relative;
   top: -0.05vw;
 }
