@@ -1,6 +1,6 @@
 {
   "kind": "collectionType",
-  "collectionName": "workshops",
+  "collectionName": "strapi_workshops",
   "info": {
     "singularName": "workshop",
     "pluralName": "workshops",
@@ -92,6 +92,77 @@
       "relation": "manyToOne",
       "target": "api::category.category",
       "inversedBy": "workshops"
+    },
+    "cycle_start_date": {
+      "type": "date",
+      "required": false
+    },
+    "cycle_end_date": {
+      "type": "date",
+      "required": false
+    },
+    "registration_deadline": {
+      "type": "date",
+      "required": false
+    },
+    "max_participants": {
+      "type": "integer",
+      "required": false
+    },
+    "num_free_places": {
+      "type": "integer",
+      "required": false
+    },
+    "num_participants": {
+      "type": "integer",
+      "required": false
+    },
+    "contact_name": {
+      "type": "string",
+      "required": false,
+      "maxLength": 200
+    },
+    "contact_email": {
+      "type": "email",
+      "required": false
+    },
+    "contact_phone": {
+      "type": "string",
+      "required": false,
+      "maxLength": 50
+    },
+    "district_name": {
+      "type": "string",
+      "required": false,
+      "maxLength": 200
+    },
+    "branch_name": {
+      "type": "string",
+      "required": false,
+      "maxLength": 200
+    },
+    "language": {
+      "type": "string",
+      "required": false,
+      "maxLength": 100
+    },
+    "min_age": {
+      "type": "integer",
+      "required": false
+    },
+    "max_age": {
+      "type": "integer",
+      "required": false
+    },
+    "meeting_address": {
+      "type": "string",
+      "required": false,
+      "maxLength": 500
+    },
+    "meeting_place_name": {
+      "type": "string",
+      "required": false,
+      "maxLength": 300
     }
   }
 }

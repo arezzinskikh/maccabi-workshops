@@ -1,6 +1,6 @@
 {
   "kind": "collectionType",
-  "collectionName": "categories",
+  "collectionName": "strapi_categories",
   "info": {
     "singularName": "category",
     "pluralName": "categories",
