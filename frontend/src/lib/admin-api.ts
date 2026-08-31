@@ -130,11 +130,19 @@ export async function fetchExternalSources(): Promise<ExternalSourceRow[]> {
   });
 }
 
+// Strapi v4 wraps relations as `{ data: null | {...} }`; v5 returns them flat.
+// A relation that's unset/deleted in v4 is `{ data: null }`, which is truthy,
+// so it must be unwrapped explicitly rather than via `?.data ?? x`.
+function unwrapRelation(rel: any): any {
+  if (rel && typeof rel === 'object' && 'data' in rel) return rel.data;
+  return rel;
+}
+
 function flattenRegistration(item: any): RegistrationRow {
   const a = item?.attributes ?? item ?? {};
-  const wsRaw = a.workshop?.data ?? a.workshop;
+  const wsRaw = unwrapRelation(a.workshop);
   const wsAttrs = wsRaw?.attributes ?? wsRaw;
-  const catRaw = wsAttrs?.category?.data ?? wsAttrs?.category;
+  const catRaw = unwrapRelation(wsAttrs?.category);
   const catAttrs = catRaw?.attributes ?? catRaw;
   return {
     id: item.id,

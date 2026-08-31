@@ -80,6 +80,13 @@ interface StrapiResponse<T> {
 
 // Strapi v4 nests entity fields under `attributes` and relations/media under
 // `.data`; v5 returns them flat. Normalize both shapes to our flat interfaces.
+// An unset/deleted v4 relation is `{ data: null }`, which is truthy, so it
+// must be unwrapped explicitly rather than via `?.data ?? x`.
+function unwrapRelation(rel: any): any {
+  if (rel && typeof rel === 'object' && 'data' in rel) return rel.data;
+  return rel;
+}
+
 function flattenCategory(item: any): Category {
   const a = item?.attributes ?? item ?? {};
   return {
@@ -97,7 +104,7 @@ function flattenCategory(item: any): Category {
 function flattenInstructor(item: any): Instructor | null {
   if (!item) return null;
   const a = item?.attributes ?? item ?? {};
-  const photoData = a.photo?.data ?? a.photo;
+  const photoData = unwrapRelation(a.photo);
   const photo = photoData?.attributes ?? photoData;
   return {
     id: item.id,
@@ -117,9 +124,9 @@ function flattenInstructor(item: any): Instructor | null {
 function flattenSessions(rawSessions: any): WorkshopDate[] | undefined {
   if (!Array.isArray(rawSessions) || rawSessions.length === 0) return undefined;
   return rawSessions.map((s, idx): WorkshopDate => {
-    const instRaw = s?.instructor?.data ?? s?.instructor;
+    const instRaw = unwrapRelation(s?.instructor);
     const inst = flattenInstructor(instRaw);
-    const cityRaw = s?.city?.data ?? s?.city;
+    const cityRaw = unwrapRelation(s?.city);
     const cityAttrs = cityRaw?.attributes ?? cityRaw;
     const cityName: string | null = cityAttrs?.name ?? null;
     // Prefer the day_name editors typed; fall back to a Hebrew day derived
@@ -146,9 +153,9 @@ function flattenSessions(rawSessions: any): WorkshopDate[] | undefined {
 
 function flattenWorkshop(item: any): Workshop {
   const a = item?.attributes ?? item ?? {};
-  const imgData = a.image?.data ?? a.image;
+  const imgData = unwrapRelation(a.image);
   const img = imgData?.attributes ?? imgData;
-  const catData = a.category?.data ?? a.category;
+  const catData = unwrapRelation(a.category);
   const sessions = flattenSessions(a.sessions);
   return {
     id: item.id,
